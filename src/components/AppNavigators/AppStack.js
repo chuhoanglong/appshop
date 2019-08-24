@@ -1,9 +1,10 @@
 import React from 'react';
 import {createStackNavigator,createBottomTabNavigator,createAppContainer} from 'react-navigation';
+import IconWithBadge from '../Anima/IconWithBadge';
 import Ionicons from 'react-native-vector-icons/FontAwesome5';
 import HomeContainer from '../../containers/HomeContainer';
 import ProductContainer from '../../containers/ProductContainer';
-import CartsComponent from '../screens/Cart/CartsComponent';
+import CartContainer from '../../containers/CartContainer';
 const homeStack = createStackNavigator({
     Home:{
         screen:HomeContainer
@@ -18,11 +19,11 @@ homeStack.navigationOptions={
 }
 const cartStack = createStackNavigator({
     Cart:{
-        screen: CartsComponent
+        screen: CartContainer
     }
 });
 cartStack.navigationOptions={
     tabBarLabel:'CART',
-    tabBarIcon: ({focused})=><Ionicons name={'cart-plus'} size={25} color={focused ? '#147efb' : 'black'}/>    
+    tabBarIcon: ({focused})=><IconWithBadge name={'cart-plus'} size={25} color={focused ? '#147efb' : 'black'}/>    
 }
 export default createBottomTabNavigator({homeStack,cartStack});

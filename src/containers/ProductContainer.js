@@ -1,18 +1,22 @@
 import { connect } from 'react-redux';
+import { addToCartTask } from '../actions/rootAction';
 import ProductComponent from '../components/screens/Home/ProductComponent';
-// import {getProductsTask} from '../actions/rootAction';
 
 const mapStateToProps = (state) => {
-    return{
+    return {
         products: state.ProductReducer.products,
-        isLoading: state.ProductReducer.isLoading
+        isLoading: state.ProductReducer.isLoading,
+        // add more than sate here
     }
 }
 
-const mapDispatchToProps = (dispatch) =>{
-    return{
-        
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addToCart: product => {
+            return dispatch(addToCartTask(product));
+        },
+        // add more than dispatch here
     }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(ProductComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(ProductComponent);
