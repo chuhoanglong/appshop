@@ -59,6 +59,7 @@ export default class Products extends Component {
                                 onPress={
                                     () => {
                                         Alert.alert('ADD CART');
+                                        this.props.addToCart(item);
                                     }
                                 }
                             >
