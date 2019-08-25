@@ -6,12 +6,15 @@ import {
     ActivityIndicator,
     StyleSheet,
     TouchableOpacity,
-    Alert
+    Alert,
+    Image
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import AsyncStore from '@react-native-community/async-storage';
+// import RNAccountKit from 'react-native-facebook-account-kit';
 
+import logo from '../../assets/codersTokyo.png';
 export default class Login extends Component {
     constructor(props) {
         super(props);
@@ -23,6 +26,23 @@ export default class Login extends Component {
         }
     }
 
+    // componentWillMount() {
+    //     RNAccountKit.configure({
+    //         responseType: 'token', // 'token' by default,
+    //         titleType: 'login',
+    //         initialAuthState: '',
+    //         initialEmail: 'some.initial@email.com',
+    //         initialPhoneCountryPrefix: '+84', // autodetected if none is provided
+    //         initialPhoneNumber: '339643579',
+    //         facebookNotificationsEnabled: true, // true by default
+    //         readPhoneStateEnabled: true, // true by default,
+    //         receiveSMS: true,
+    //         defaultCountry: 'VN',
+    //         theme: {
+    //             // for iOS only, see the Theme section
+    //         }
+    //     })
+    // }
 
     componentDidMount() {
         const { navigate } = this.props.navigation;
@@ -40,7 +60,11 @@ export default class Login extends Component {
 
         return (
             <View style={styles.container}>
-                <Text style={[styles.containerLogin]}>Login</Text>
+                <Image
+                    source={logo}
+                    style={{ width: 200, height: 40, marginTop:30, alignSelf: 'center',}}
+                ></Image>
+                <Text style={[styles.containerLogin]}>LOGIN<Text style={[styles.containerLogin,{color:'#6cb693'}]}>.APPSHOP</Text></Text>
                 <View style={[styles.containerEnter]}>
 
                     <Text style={{ fontSize: 12 }}>UserName:</Text>
@@ -54,7 +78,7 @@ export default class Login extends Component {
                             })
                         }
                     />
-                    <Text style={{ fontSize: 12 }}>Password:</Text>
+                    <Text style={{ fontSize: 12, marginTop: 15 }}>Password:</Text>
                     <View style={{
                         flexDirection: "row",
                         justifyContent: 'center',
@@ -96,7 +120,7 @@ export default class Login extends Component {
                         <Text style={[styles.containerCheckboxTxt]}>Forgot Password?</Text>
                     </View>
                     <LinearGradient
-                        start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#0092ff', '#c9bfff', '#c700fc']} style={[styles.linearGradient, styles.containerBtn]}
+                        start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#0092ff', '#c9bfff', '#c700fc']} style={[styles.linearGradient, { borderRadius: 50, marginVertical: 2 }]}
                     >
 
                         <TouchableOpacity
@@ -123,7 +147,54 @@ export default class Login extends Component {
                             }
                         </TouchableOpacity>
                     </LinearGradient>
-                    <Text style={{ textAlign: 'center', fontSize: 12, color: '#BBB', marginTop: 40 }}>Or Sign Up Using</Text>
+                    <LinearGradient
+                        start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#0092ff', '#c9bfff', '#c700fc']} style={[styles.linearGradient, { borderRadius: 50, marginVertical: 2 }]}
+                    >
+
+                        <TouchableOpacity
+                            style={[styles.containerBtn]}
+                        // onPress={
+                        //     () => {
+                        //         RNAccountKit.loginWithPhone()
+                        //             .then((token) => {
+                        //                 if (!token) {
+                        //                     console.log('Login cancelled')
+                        //                 } else {
+                        //                     console.log(`Logged with phone. Token: ${token}`);
+                        //                     AsyncStore.setItem('token', 'thisisthetoken');
+                        //                     this.setState({ isActivity: !this.state.isActivity });
+                        //                     navigate('Home');
+                        //                 }
+                        //             })
+                        //     }
+                        // }
+                        >
+                            <Text style={[styles.containerBtnTxt]}>LOGIN WITH NUMBER PHONE</Text>
+                        </TouchableOpacity>
+                    </LinearGradient>
+                    <LinearGradient
+                        start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#0092ff', '#c9bfff', '#c700fc']} style={[styles.linearGradient, { borderRadius: 50, marginVertical: 2 }]}
+                    >
+
+                        <TouchableOpacity
+                            style={[styles.containerBtn]}
+                        // onPress={
+                        //     () => {
+                        //         RNAccountKit.loginWithEmail()
+                        //             .then((token) => {
+                        //                 if (!token) {
+                        //                     console.log('Login cancelled')
+                        //                 } else {
+                        //                     console.log(`Logged with email. Token: ${token}`)
+                        //                 }
+                        //             })
+                        //     }
+                        // }
+                        >
+                            <Text style={[styles.containerBtnTxt]}>LOGIN WITH EMAIL</Text>
+                        </TouchableOpacity>
+                    </LinearGradient>
+                    <Text style={{ textAlign: 'center', fontSize: 12, color: '#BBB', marginTop: 10 }}>Or Sign Up Using</Text>
                 </View>
                 <View style={[styles.containerIcon]}>
 
@@ -147,13 +218,19 @@ export default class Login extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#FFF'
+        backgroundColor: '#FFF',
+        
     },
     containerLogin: {
-        fontSize: 20,
+        alignSelf:'center',
+        width:160,
+        fontSize: 18,
         fontWeight: 'bold',
+        color:'#787878',
         textAlign: 'center',
-        marginVertical: 30,
+        marginBottom: 30,
+        borderBottomColor:'#005aa7',
+        borderBottomWidth:1,
     },
     containerEnter: {
         marginHorizontal: 45,
@@ -179,16 +256,17 @@ const styles = StyleSheet.create({
     containerBtn: {
         borderRadius: 50,
         height: 30,
-        position: 'relative'
-
+        marginVertical: 4,
+        justifyContent: 'flex-start',
     },
     containerBtnTxt: {
         textAlign: 'center',
-        justifyContent: 'center',
+        alignSelf: 'center',
         top: 4,
         fontSize: 15,
         fontWeight: 'bold',
-        color: '#FFF'
+        color: '#FFF',
+        marginBottom: 4
     },
     containerIcon: {
         flexDirection: 'row',
