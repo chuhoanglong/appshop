@@ -12,7 +12,7 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import AsyncStore from '@react-native-community/async-storage';
-// import RNAccountKit from 'react-native-facebook-account-kit';
+import RNAccountKit from 'react-native-facebook-account-kit';
 
 import logo from '../../assets/codersTokyo.png';
 export default class Login extends Component {
@@ -26,23 +26,23 @@ export default class Login extends Component {
         }
     }
 
-    // componentWillMount() {
-    //     RNAccountKit.configure({
-    //         responseType: 'token', // 'token' by default,
-    //         titleType: 'login',
-    //         initialAuthState: '',
-    //         initialEmail: 'some.initial@email.com',
-    //         initialPhoneCountryPrefix: '+84', // autodetected if none is provided
-    //         initialPhoneNumber: '339643579',
-    //         facebookNotificationsEnabled: true, // true by default
-    //         readPhoneStateEnabled: true, // true by default,
-    //         receiveSMS: true,
-    //         defaultCountry: 'VN',
-    //         theme: {
-    //             // for iOS only, see the Theme section
-    //         }
-    //     })
-    // }
+    componentWillMount() {
+        RNAccountKit.configure({
+            responseType: 'token', // 'token' by default,
+            titleType: 'login',
+            initialAuthState: '',
+            initialEmail: 'some.initial@email.com',
+            initialPhoneCountryPrefix: '+84', // autodetected if none is provided
+            initialPhoneNumber: '339643579',
+            facebookNotificationsEnabled: true, // true by default
+            readPhoneStateEnabled: true, // true by default,
+            receiveSMS: true,
+            defaultCountry: 'VN',
+            theme: {
+                // for iOS only, see the Theme section
+            }
+        })
+    }
 
     componentDidMount() {
         const { navigate } = this.props.navigation;
@@ -141,8 +141,8 @@ export default class Login extends Component {
                             {
                                 this.state.isActivity && <ActivityIndicator
                                     size="small"
-                                    color="#c9bfff"
-                                    style={{ top: 10 }}
+                                    color="#8a4af3"
+                                    style={{ top: 10, position:'absolute' ,zIndex:9, alignSelf: 'center',}}
                                 ></ActivityIndicator>
                             }
                         </TouchableOpacity>
@@ -153,21 +153,21 @@ export default class Login extends Component {
 
                         <TouchableOpacity
                             style={[styles.containerBtn]}
-                        // onPress={
-                        //     () => {
-                        //         RNAccountKit.loginWithPhone()
-                        //             .then((token) => {
-                        //                 if (!token) {
-                        //                     console.log('Login cancelled')
-                        //                 } else {
-                        //                     console.log(`Logged with phone. Token: ${token}`);
-                        //                     AsyncStore.setItem('token', 'thisisthetoken');
-                        //                     this.setState({ isActivity: !this.state.isActivity });
-                        //                     navigate('Home');
-                        //                 }
-                        //             })
-                        //     }
-                        // }
+                        onPress={
+                            () => {
+                                RNAccountKit.loginWithPhone()
+                                    .then((token) => {
+                                        if (!token) {
+                                            console.log('Login cancelled')
+                                        } else {
+                                            console.log(`Logged with phone. Token: ${token}`);
+                                            AsyncStore.setItem('token', 'thisisthetoken');
+                                            this.setState({ isActivity: !this.state.isActivity });
+                                            navigate('Home');
+                                        }
+                                    })
+                            }
+                        }
                         >
                             <Text style={[styles.containerBtnTxt]}>LOGIN WITH NUMBER PHONE</Text>
                         </TouchableOpacity>
@@ -178,18 +178,18 @@ export default class Login extends Component {
 
                         <TouchableOpacity
                             style={[styles.containerBtn]}
-                        // onPress={
-                        //     () => {
-                        //         RNAccountKit.loginWithEmail()
-                        //             .then((token) => {
-                        //                 if (!token) {
-                        //                     console.log('Login cancelled')
-                        //                 } else {
-                        //                     console.log(`Logged with email. Token: ${token}`)
-                        //                 }
-                        //             })
-                        //     }
-                        // }
+                        onPress={
+                            () => {
+                                RNAccountKit.loginWithEmail()
+                                    .then((token) => {
+                                        if (!token) {
+                                            console.log('Login cancelled')
+                                        } else {
+                                            console.log(`Logged with email. Token: ${token}`)
+                                        }
+                                    })
+                            }
+                        }
                         >
                             <Text style={[styles.containerBtnTxt]}>LOGIN WITH EMAIL</Text>
                         </TouchableOpacity>
