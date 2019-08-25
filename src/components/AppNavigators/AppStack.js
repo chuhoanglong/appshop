@@ -1,29 +1,43 @@
 import React from 'react';
-import {createStackNavigator,createBottomTabNavigator,createAppContainer} from 'react-navigation';
+import { createStackNavigator, createBottomTabNavigator, createAppContainer } from 'react-navigation';
 import IconWithBadge from '../Anima/IconWithBadge';
 import Ionicons from 'react-native-vector-icons/FontAwesome5';
 import HomeContainer from '../../containers/HomeContainer';
 import ProductContainer from '../../containers/ProductContainer';
 import CartContainer from '../../containers/CartContainer';
+
+import UserComponent from '../UserManager/UserComponent';
+
 const homeStack = createStackNavigator({
-    Home:{
-        screen:HomeContainer
+    Home: {
+        screen: HomeContainer
     },
-    Products:{
+    Products: {
         screen: ProductContainer
     }
 });
-homeStack.navigationOptions={
-    tabBarLabel:'HOME',
-    tabBarIcon: ({focused})=><Ionicons name={'home'} size={25} color={focused ? '#147efb' : 'black'}/>
+homeStack.navigationOptions = {
+    tabBarLabel: 'HOME',
+    tabBarIcon: ({ focused }) => <Ionicons name={'home'} size={25} color={focused ? '#147efb' : 'black'} />
 }
 const cartStack = createStackNavigator({
-    Cart:{
+    Cart: {
         screen: CartContainer
     }
 });
-cartStack.navigationOptions={
-    tabBarLabel:'CART',
-    tabBarIcon: ({focused})=><IconWithBadge name={'cart-plus'} size={25} color={focused ? '#147efb' : 'black'}/>    
+cartStack.navigationOptions = {
+    tabBarLabel: 'CART',
+    tabBarIcon: ({ focused }) => <IconWithBadge name={'cart-plus'} size={25} color={focused ? '#147efb' : 'black'} />
 }
-export default createBottomTabNavigator({homeStack,cartStack});
+
+const userManagerStack = createStackNavigator({
+    USER: {
+        screen: UserComponent
+    }
+});
+userManagerStack.navigationOptions = {
+    tabBarLabel: 'USER',
+    tabBarIcon: ({focused}) => <Ionicons name={'user'} size={25} color={focused ? '#147efb' : 'black'}></Ionicons>
+}
+
+export default createBottomTabNavigator({ homeStack, cartStack, userManagerStack });
