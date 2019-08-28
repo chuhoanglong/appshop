@@ -1,35 +1,35 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, FlatList, Picker, Alert } from 'react-native';
-
+import AsyncStorage from '@react-native-community/async-storage';
 export default class CartsComponent extends React.Component {
-
     constructor(props) {
         super(props);
     }
 
     static navigationOptions = ({ navigation }) => ({ title: 'CART', tabBarLabel: "CART" })
 
-    // handleChangeSize(id, size){
-    //     const {data} = this.props;
-    //     const newData = data.map((item)=>{
-    //         if(item.id == id){
-    //             return {
-    //                 ...item,
-    //                 size: size
-    //             }
-    //         }else{
-    //             return {...item}
-    //         }
-    //     });
-    //     return newData;
-    // }
+    handleChangeSize(id, size) {
+        const newCarts = this.props.carts.map((item) => {
+            if (item.id == id) {
+                return {
+                    ...item,
+                    size: size
+                }
+            } else {
+                return { ...item }
+            }
+        });
+        return newCarts;
+    }
+
+    async componentWillMount() {
+        console.log('====================================');
+        console.log('componentWillMOunt');
+        console.log('====================================');
+        await AsyncStorage.setItem('carts', JSON.stringify(this.props.carts));
+    }
 
     render() {
-        // lay data tu state
-        // const {carts} = this.props;
-        console.log('====================================');
-        console.log(this.props.carts);
-        console.log('====================================');
         return (
             <FlatList
                 data={this.props.carts}
@@ -41,19 +41,16 @@ export default class CartsComponent extends React.Component {
                             <Text style={{ fontSize: 15 }}>Color: {item.color}</Text>
                             <Text style={{ fontSize: 15 }}>Price: {item.price}</Text>
 
-                            {/* tuy chon size van chua hoan thanh */}
+                            {/* tuy chon size */}
                             <View style={{ flex: 1, flexDirection: 'row', }}>
                                 <Text style={{ flex: 1 }}>Size: </Text>
                                 <Picker
                                     selectedValue={item.size}
                                     style={{ height: 20, flex: 1 }}
-                                // onValueChange={(itemValue) =>{
-                                //     const {dispatch} = this.props;
-                                //     dispatch({
-                                //         type:"UPDATE",
-                                //         carts: this.handleChangeSize(item.id,itemValue)
-                                //     })
-                                // }}
+                                    onValueChange={(itemValue) => {
+                                        const newCarts = this.handleChangeSize(item.id, itemValue);
+                                        this.props.onChangeSize(newCarts);
+                                    }}
 
                                 >
                                     <Picker.Item label="36" value="36" />

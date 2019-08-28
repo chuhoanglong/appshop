@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import CartsComponent from '../components/screens/Cart/CartsComponent';
+import { changeSize } from '../actions/rootAction';
 
 const mapStateToProps = state => {
     return {
@@ -8,9 +9,11 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => {
-    return{
-
+    return {
+        onChangeSize: newCarts => {
+            dispatch(changeSize(newCarts));
+        }
     }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(CartsComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(CartsComponent);

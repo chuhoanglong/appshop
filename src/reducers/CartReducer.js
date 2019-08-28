@@ -15,6 +15,12 @@ const CartReducer = (state = initalState, action) => {
                 ]
             }
         }
+        case Types.CHANGE_SIZE: {
+            return{
+                ...state,
+                carts: action.newCarts
+            }
+        }
 
         default: return state;
 

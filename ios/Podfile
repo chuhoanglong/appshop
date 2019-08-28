@@ -35,6 +35,8 @@ target 'appshop' do
 
   pod 'RNAccountKit', :path => '../node_modules/react-native-facebook-account-kit'
 
+  pod 'react-native-splash-screen', :path => '../node_modules/react-native-splash-screen'
+
   target 'appshopTests' do
     inherit! :search_paths
     # Pods for testing

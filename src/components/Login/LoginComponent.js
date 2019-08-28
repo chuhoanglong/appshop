@@ -62,7 +62,7 @@ export default class Login extends Component {
             <View style={styles.container}>
                 <Image
                     source={logo}
-                    style={{ width: 200, height: 40, marginTop:30, alignSelf: 'center',}}
+                    style={{ width: 200, height: 40, marginTop:100, alignSelf: 'center',}}
                 ></Image>
                 <Text style={[styles.containerLogin]}>LOGIN<Text style={[styles.containerLogin,{color:'#6cb693'}]}>.APPSHOP</Text></Text>
                 <View style={[styles.containerEnter]}>
@@ -228,7 +228,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color:'#787878',
         textAlign: 'center',
-        marginBottom: 30,
+        marginBottom: 100,
         borderBottomColor:'#005aa7',
         borderBottomWidth:1,
     },

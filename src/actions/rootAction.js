@@ -14,6 +14,12 @@ export const addToCartTask = (product) => {
     }
 }
 
+export const changeSize = (newCarts) => {
+    return {
+        type: Types.CHANGE_SIZE,
+        newCarts
+    }
+}
 
 // dispatch of redux-saga
 export const fetchSuccessProducts = (products, isLoading) => {
