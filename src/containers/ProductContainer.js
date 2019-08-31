@@ -6,6 +6,7 @@ const mapStateToProps = (state) => {
     return {
         products: state.ProductReducer.products,
         isLoading: state.ProductReducer.isLoading,
+        carts: state.CartReducer.carts
         // add more than sate here
     }
 }

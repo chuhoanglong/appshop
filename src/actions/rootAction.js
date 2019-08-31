@@ -21,6 +21,19 @@ export const changeSize = (newCarts) => {
     }
 }
 
+export const deleteProduct = (newCarts)=>{
+    return{
+        type: Types.DELETE_PRODUCT,
+        newCarts
+    }
+}
+
+export const getCarts = ()=>{
+    return{
+        type: Types.START_APP
+    }
+}
+
 // dispatch of redux-saga
 export const fetchSuccessProducts = (products, isLoading) => {
     return {
