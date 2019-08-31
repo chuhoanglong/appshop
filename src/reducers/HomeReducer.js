@@ -3,7 +3,7 @@ import adidas from '../assets/adidas.png';
 import nike from '../assets/nike.png';
 import coffe from '../assets/coffee.png';
 import cupcake from '../assets/cupcake.png';
-import badhabits from '../assets/logoxxx.png';
+import badhabits from '../assets/logo.jpg';
 const initialState = {
     categorys:[
         {

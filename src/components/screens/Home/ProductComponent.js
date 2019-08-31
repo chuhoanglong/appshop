@@ -9,7 +9,7 @@ import {
     Alert,
     ActivityIndicator
 } from 'react-native';
-
+import AsyncStorage from '@react-native-community/async-storage';
 export default class Products extends Component {
 
     constructor(props) {
@@ -58,8 +58,20 @@ export default class Products extends Component {
                                 style={styles.containerBtn}
                                 onPress={
                                     () => {
-                                        Alert.alert('ADD CART');
-                                        this.props.addToCart(item);
+                                        Alert.alert('Add To Cart')
+                                        let product = {
+                                            ...item,
+                                            key: new Date
+                                        }
+                                        this.props.addToCart(product);
+                                        let carts = this.props.carts;
+                                        carts.push(product);
+                                        try {
+                                            AsyncStorage.setItem('carts',JSON.stringify(carts));
+                                        } catch (error) {
+                                            console.log(error);
+                                            
+                                        }
                                     }
                                 }
                             >

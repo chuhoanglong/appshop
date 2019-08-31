@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, FlatList, Picker, Alert } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
+import Swipeout from 'react-native-swipeout';
 export default class CartsComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -19,14 +20,13 @@ export default class CartsComponent extends React.Component {
                 return { ...item }
             }
         });
+        try {
+            AsyncStorage.setItem('carts',JSON.stringify(newCarts))
+        } catch (error) {
+            console.log(error);
+            
+        }
         return newCarts;
-    }
-
-    async componentWillMount() {
-        console.log('====================================');
-        console.log('componentWillMOunt');
-        console.log('====================================');
-        await AsyncStorage.setItem('carts', JSON.stringify(this.props.carts));
     }
 
     render() {
@@ -34,38 +34,85 @@ export default class CartsComponent extends React.Component {
             <FlatList
                 data={this.props.carts}
                 renderItem={({ item }) => (
-                    <View style={[styles.container]}>
-                        <Image source={{ uri: item.url }} style={{ width: 170, height: 120, flex: 1 }}></Image>
-                        <View style={[styles.info]}>
-                            <Text style={{ fontSize: 20 }}>{item.name}</Text>
-                            <Text style={{ fontSize: 15 }}>Color: {item.color}</Text>
-                            <Text style={{ fontSize: 15 }}>Price: {item.price}</Text>
+                    <Swipeout
+                        right={[
+                            {
+                                text: 'Delete',
+                                onPress: () => {
+                                    Alert.alert(
+                                        'DLETE',
+                                        `You Want Delete Product ${item.name} ?`,
+                                        [
+                                            {
+                                                text: 'Cancel',
+                                                onPress: () => console.log('Ask me later pressed'),
+                                                style: 'cancel',
+                                            },
+                                            {
+                                                text: 'OK',
+                                                onPress: () => {
+                                                    let newCarts = this.props.carts.filter(
+                                                        (product) => {
+                                                            return product.key != item.key
+                                                        }
+                                                    )
+                                                    this.props.onDeleteProduct(newCarts);
+                                                    try {
+                                                        AsyncStorage.setItem('carts',JSON.stringify(newCarts))
+                                                    } catch (error) {
+                                                        console.log(error);
+                                                        
+                                                    }
+                                                }
+                                            }
 
-                            {/* tuy chon size */}
-                            <View style={{ flex: 1, flexDirection: 'row', }}>
-                                <Text style={{ flex: 1 }}>Size: </Text>
-                                <Picker
-                                    selectedValue={item.size}
-                                    style={{ height: 20, flex: 1 }}
-                                    onValueChange={(itemValue) => {
-                                        const newCarts = this.handleChangeSize(item.id, itemValue);
-                                        this.props.onChangeSize(newCarts);
-                                    }}
 
-                                >
-                                    <Picker.Item label="36" value="36" />
-                                    <Picker.Item label="37" value="37" />
-                                    <Picker.Item label="38" value="38" />
-                                    <Picker.Item label="39" value="39" />
-                                    <Picker.Item label="40" value="40" />
-                                </Picker>
-                                {/* ket thuc phan tuy chinh size */}
+                                        ]
+                                    );
+
+                                },
+                                type: 'delete',
+                                underlayColor: 'black',
+                            }
+                        ]}
+                        backgroundColor={'transparent'}
+                        buttonWidth={90}
+
+                    >
+
+                        <View style={[styles.container]}>
+                            <Image source={{ uri: item.url }} style={{ width: 170, height: 120, flex: 1 }}></Image>
+                            <View style={[styles.info]}>
+                                <Text style={{ fontSize: 20 }}>{item.name}</Text>
+                                <Text style={{ fontSize: 15 }}>Color: {item.color}</Text>
+                                <Text style={{ fontSize: 15 }}>Price: {item.price}</Text>
+
+                                {/* tuy chon size */}
+                                <View style={{ flex: 1, flexDirection: 'row', }}>
+                                    <Text style={{ flex: 1 }}>Size: </Text>
+                                    <Picker
+                                        selectedValue={item.size}
+                                        style={{ height: 20, flex: 1 }}
+                                        onValueChange={(itemValue) => {
+                                            const newCarts = this.handleChangeSize(item.id, itemValue);
+                                            this.props.onChangeSize(newCarts);
+                                        }}
+
+                                    >
+                                        <Picker.Item label="36" value="36" />
+                                        <Picker.Item label="37" value="37" />
+                                        <Picker.Item label="38" value="38" />
+                                        <Picker.Item label="39" value="39" />
+                                        <Picker.Item label="40" value="40" />
+                                    </Picker>
+                                    {/* ket thuc phan tuy chinh size */}
+                                </View>
+
                             </View>
-
                         </View>
-                    </View>
+                    </Swipeout>
                 )}
-                keyExtractor={(item) => `${item.id}`}
+                keyExtractor={(item) => `${item.key}`}
                 style={{ paddingVertical: 8 }}
             ></FlatList>
 

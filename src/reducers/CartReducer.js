@@ -1,5 +1,6 @@
 import * as Types from '../actions/actionTypes';
 
+
 const initalState = {
     carts: []
 }
@@ -21,7 +22,18 @@ const CartReducer = (state = initalState, action) => {
                 carts: action.newCarts
             }
         }
-
+        case Types.DELETE_PRODUCT: {
+            return {
+                ...state,
+                carts: action.newCarts
+            }
+        }
+        case Types.GET_SUCCESS_CARTS_ASYNCSTORAGE:{
+            return{
+                ...state,
+                carts: action.carts
+            }
+        }
         default: return state;
 
     }

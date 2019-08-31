@@ -7,7 +7,8 @@ import {
     StyleSheet,
     TouchableOpacity,
     Alert,
-    Image
+    Image,
+    KeyboardAvoidingView
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -59,159 +60,161 @@ export default class Login extends Component {
         const { navigate } = this.props.navigation;
 
         return (
-            <View style={styles.container}>
-                <Image
-                    source={logo}
-                    style={{ width: 200, height: 40, marginTop:100, alignSelf: 'center',}}
-                ></Image>
-                <Text style={[styles.containerLogin]}>LOGIN<Text style={[styles.containerLogin,{color:'#6cb693'}]}>.APPSHOP</Text></Text>
-                <View style={[styles.containerEnter]}>
+            <KeyboardAvoidingView style={{flex:1}} behavior='padding' enabled>
+                <View style={styles.container}>
+                    <Image
+                        source={logo}
+                        style={{ width: 200, height: 40, marginTop: 100, alignSelf: 'center', }}
+                    ></Image>
+                    <Text style={[styles.containerLogin]}>LOGIN<Text style={[styles.containerLogin, { color: '#6cb693' }]}>.APPSHOP</Text></Text>
+                    <View style={[styles.containerEnter]}>
 
-                    <Text style={{ fontSize: 12 }}>UserName:</Text>
-                    <TextInput
-                        placeholder={'Type your username'}
-                        keyboardType={'name-phone-pad'}
-                        style={{ borderBottomColor: '#CCC', borderBottomWidth: 1, fontSize: 13 }}
-                        onChangeText={
-                            (username) => this.setState({
-                                username
-                            })
-                        }
-                    />
-                    <Text style={{ fontSize: 12, marginTop: 15 }}>Password:</Text>
-                    <View style={{
-                        flexDirection: "row",
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        borderBottomColor: '#CCC',
-                        borderBottomWidth: 0.5
-
-                    }}>
-                        <Icon size={16} name='lock' style={{ alignSelf: 'center' }} />
+                        <Text style={{ fontSize: 12 }}>UserName:</Text>
                         <TextInput
-                            placeholder={'Type your password'}
-
-                            secureTextEntry={this.state.isSecureTextEntry}
-                            style={[styles.containerTxt]}
+                            placeholder={'Type your username'}
+                            keyboardType={'name-phone-pad'}
+                            style={{ borderBottomColor: '#CCC', borderBottomWidth: 1, fontSize: 13 }}
                             onChangeText={
-                                (password) => this.setState({
-                                    password
+                                (username) => this.setState({
+                                    username
                                 })
                             }
                         />
+                        <Text style={{ fontSize: 12, marginTop: 15 }}>Password:</Text>
+                        <View style={{
+                            flexDirection: "row",
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            borderBottomColor: '#CCC',
+                            borderBottomWidth: 0.5
 
-                        {
-                            this.state.isSecureTextEntry ? <Icon size={16} name='eye-slash' style={{ alignSelf: 'center' }}
-                                onPress={
-                                    () => {
-                                        this.setState({ isSecureTextEntry: !this.state.isSecureTextEntry });
-                                    }
-                                }
-                            /> : <Icon size={16} name='eye' style={{ alignSelf: 'center' }}
-                                onPress={
-                                    () => {
-                                        this.setState({ isSecureTextEntry: !this.state.isSecureTextEntry });
-                                    }
-                                }
-                                />
-                        }
-                    </View>
-                    <View style={[styles.containerCheckbox]}>
-                        <Text style={[styles.containerCheckboxTxt]}>Forgot Password?</Text>
-                    </View>
-                    <LinearGradient
-                        start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#0092ff', '#c9bfff', '#c700fc']} style={[styles.linearGradient, { borderRadius: 50, marginVertical: 2 }]}
-                    >
+                        }}>
+                            <Icon size={16} name='lock' style={{ alignSelf: 'center' }} />
+                            <TextInput
+                                placeholder={'Type your password'}
 
-                        <TouchableOpacity
-                            style={[styles.containerBtn]}
-                            onPress={
-                                () => {
-                                    this.setState({ isActivity: !this.state.isActivity });
-                                    // const { username, password } = this.state;
-                                    setTimeout(async () => {
-                                        AsyncStore.setItem('token', 'thisisthetoken');
-                                        this.setState({ isActivity: !this.state.isActivity });
-                                        navigate('Home');
-                                    }, 3000)
+                                secureTextEntry={this.state.isSecureTextEntry}
+                                style={[styles.containerTxt]}
+                                onChangeText={
+                                    (password) => this.setState({
+                                        password
+                                    })
                                 }
-                            }
-                        >
-                            <Text style={[styles.containerBtnTxt]}>LOGIN</Text>
+                            />
+
                             {
-                                this.state.isActivity && <ActivityIndicator
-                                    size="small"
-                                    color="#8a4af3"
-                                    style={{ top: 10, position:'absolute' ,zIndex:9, alignSelf: 'center',}}
-                                ></ActivityIndicator>
+                                this.state.isSecureTextEntry ? <Icon size={16} name='eye-slash' style={{ alignSelf: 'center' }}
+                                    onPress={
+                                        () => {
+                                            this.setState({ isSecureTextEntry: !this.state.isSecureTextEntry });
+                                        }
+                                    }
+                                /> : <Icon size={16} name='eye' style={{ alignSelf: 'center' }}
+                                    onPress={
+                                        () => {
+                                            this.setState({ isSecureTextEntry: !this.state.isSecureTextEntry });
+                                        }
+                                    }
+                                    />
                             }
-                        </TouchableOpacity>
-                    </LinearGradient>
-                    <LinearGradient
-                        start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#0092ff', '#c9bfff', '#c700fc']} style={[styles.linearGradient, { borderRadius: 50, marginVertical: 2 }]}
-                    >
+                        </View>
+                        <View style={[styles.containerCheckbox]}>
+                            <Text style={[styles.containerCheckboxTxt]}>Forgot Password?</Text>
+                        </View>
+                        <LinearGradient
+                            start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#0092ff', '#c9bfff', '#c700fc']} style={[styles.linearGradient, { borderRadius: 50, marginVertical: 2 }]}
+                        >
 
-                        <TouchableOpacity
-                            style={[styles.containerBtn]}
-                        onPress={
-                            () => {
-                                RNAccountKit.loginWithPhone()
-                                    .then((token) => {
-                                        if (!token) {
-                                            console.log('Login cancelled')
-                                        } else {
-                                            console.log(`Logged with phone. Token: ${token}`);
+                            <TouchableOpacity
+                                style={[styles.containerBtn]}
+                                onPress={
+                                    () => {
+                                        this.setState({ isActivity: !this.state.isActivity });
+                                        // const { username, password } = this.state;
+                                        setTimeout(async () => {
                                             AsyncStore.setItem('token', 'thisisthetoken');
                                             this.setState({ isActivity: !this.state.isActivity });
                                             navigate('Home');
-                                        }
-                                    })
-                            }
-                        }
+                                        }, 3000)
+                                    }
+                                }
+                            >
+                                <Text style={[styles.containerBtnTxt]}>LOGIN</Text>
+                                {
+                                    this.state.isActivity && <ActivityIndicator
+                                        size="small"
+                                        color="#8a4af3"
+                                        style={{ top: 10, position: 'absolute', zIndex: 9, alignSelf: 'center', }}
+                                    ></ActivityIndicator>
+                                }
+                            </TouchableOpacity>
+                        </LinearGradient>
+                        <LinearGradient
+                            start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#0092ff', '#c9bfff', '#c700fc']} style={[styles.linearGradient, { borderRadius: 50, marginVertical: 2 }]}
                         >
-                            <Text style={[styles.containerBtnTxt]}>LOGIN WITH NUMBER PHONE</Text>
-                        </TouchableOpacity>
-                    </LinearGradient>
-                    <LinearGradient
-                        start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#0092ff', '#c9bfff', '#c700fc']} style={[styles.linearGradient, { borderRadius: 50, marginVertical: 2 }]}
-                    >
 
-                        <TouchableOpacity
-                            style={[styles.containerBtn]}
-                        onPress={
-                            () => {
-                                RNAccountKit.loginWithEmail()
-                                    .then((token) => {
-                                        if (!token) {
-                                            console.log('Login cancelled')
-                                        } else {
-                                            console.log(`Logged with email. Token: ${token}`)
-                                        }
-                                    })
-                            }
-                        }
+                            <TouchableOpacity
+                                style={[styles.containerBtn]}
+                                onPress={
+                                    () => {
+                                        RNAccountKit.loginWithPhone()
+                                            .then((token) => {
+                                                if (!token) {
+                                                    console.log('Login cancelled')
+                                                } else {
+                                                    console.log(`Logged with phone. Token: ${token}`);
+                                                    AsyncStore.setItem('token', 'thisisthetoken');
+                                                    this.setState({ isActivity: !this.state.isActivity });
+                                                    navigate('Home');
+                                                }
+                                            })
+                                    }
+                                }
+                            >
+                                <Text style={[styles.containerBtnTxt]}>LOGIN WITH NUMBER PHONE</Text>
+                            </TouchableOpacity>
+                        </LinearGradient>
+                        <LinearGradient
+                            start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#0092ff', '#c9bfff', '#c700fc']} style={[styles.linearGradient, { borderRadius: 50, marginVertical: 2 }]}
                         >
-                            <Text style={[styles.containerBtnTxt]}>LOGIN WITH EMAIL</Text>
-                        </TouchableOpacity>
-                    </LinearGradient>
-                    <Text style={{ textAlign: 'center', fontSize: 12, color: '#BBB', marginTop: 10 }}>Or Sign Up Using</Text>
-                </View>
-                <View style={[styles.containerIcon]}>
 
-                    <View style={{ marginHorizontal: 8, width: 40, height: 40, borderRadius: 100, backgroundColor: '#00336B', justifyContent: 'center', alignSelf: 'center' }}>
-                        <Icon name='facebook' size={25} color={'white'}
-                            style={{ alignSelf: 'center' }}></Icon>
+                            <TouchableOpacity
+                                style={[styles.containerBtn]}
+                                onPress={
+                                    () => {
+                                        RNAccountKit.loginWithEmail()
+                                            .then((token) => {
+                                                if (!token) {
+                                                    console.log('Login cancelled')
+                                                } else {
+                                                    console.log(`Logged with email. Token: ${token}`)
+                                                }
+                                            })
+                                    }
+                                }
+                            >
+                                <Text style={[styles.containerBtnTxt]}>LOGIN WITH EMAIL</Text>
+                            </TouchableOpacity>
+                        </LinearGradient>
+                        <Text style={{ textAlign: 'center', fontSize: 12, color: '#BBB', marginTop: 10 }}>Or Sign Up Using</Text>
                     </View>
-                    <View style={{ marginHorizontal: 8, width: 40, height: 40, borderRadius: 100, backgroundColor: '#2181C4', justifyContent: 'center', alignSelf: 'center' }}>
-                        <Icon name='twitter' size={25} color={'white'}
-                            style={{ alignSelf: 'center' }}></Icon>
-                    </View>
-                    <View style={{ marginHorizontal: 8, width: 40, height: 40, borderRadius: 100, backgroundColor: '#C10000', justifyContent: 'center', alignSelf: 'center' }}>
-                        <Icon name='google' size={25} color={'white'} style={{ marginHorizontal: 8 }}></Icon>
-                    </View>
+                    <View style={[styles.containerIcon]}>
 
+                        <View style={{ marginHorizontal: 8, width: 40, height: 40, borderRadius: 100, backgroundColor: '#00336B', justifyContent: 'center', alignSelf: 'center' }}>
+                            <Icon name='facebook' size={25} color={'white'}
+                                style={{ alignSelf: 'center' }}></Icon>
+                        </View>
+                        <View style={{ marginHorizontal: 8, width: 40, height: 40, borderRadius: 100, backgroundColor: '#2181C4', justifyContent: 'center', alignSelf: 'center' }}>
+                            <Icon name='twitter' size={25} color={'white'}
+                                style={{ alignSelf: 'center' }}></Icon>
+                        </View>
+                        <View style={{ marginHorizontal: 8, width: 40, height: 40, borderRadius: 100, backgroundColor: '#C10000', justifyContent: 'center', alignSelf: 'center' }}>
+                            <Icon name='google' size={25} color={'white'} style={{ marginHorizontal: 8 }}></Icon>
+                        </View>
+
+                    </View>
                 </View>
-            </View>
+            </KeyboardAvoidingView>
         );
     }
 }
@@ -219,18 +222,18 @@ export default class Login extends Component {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#FFF',
-        
+
     },
     containerLogin: {
-        alignSelf:'center',
-        width:160,
+        alignSelf: 'center',
+        width: 160,
         fontSize: 18,
         fontWeight: 'bold',
-        color:'#787878',
+        color: '#787878',
         textAlign: 'center',
         marginBottom: 100,
-        borderBottomColor:'#005aa7',
-        borderBottomWidth:1,
+        borderBottomColor: '#005aa7',
+        borderBottomWidth: 1,
     },
     containerEnter: {
         marginHorizontal: 45,

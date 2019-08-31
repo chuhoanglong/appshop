@@ -29,6 +29,10 @@ const styles = StyleSheet.create({
 
 export default class Home extends Component {
 
+    componentDidMount(){
+        this.props.getCarts();
+    }
+
     render() {
         // sử dụng navigate để di chuyển giữa 2 màn hình
         const { navigate } = this.props.navigation;
