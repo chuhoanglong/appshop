@@ -5,7 +5,7 @@ import Ionicons from 'react-native-vector-icons/FontAwesome5';
 import HomeContainer from '../../containers/HomeContainer';
 import ProductContainer from '../../containers/ProductContainer';
 import CartContainer from '../../containers/CartContainer';
-
+import BuyCart from '../../components/screens/Cart/buyCart';
 import UserComponent from '../UserManager/UserComponent';
 
 const homeStack = createStackNavigator({
@@ -23,6 +23,9 @@ homeStack.navigationOptions = {
 const cartStack = createStackNavigator({
     Cart: {
         screen: CartContainer
+    },
+    BuyCart: {
+        screen: BuyCart
     }
 });
 cartStack.navigationOptions = {
