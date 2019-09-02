@@ -6,7 +6,7 @@ import SplashScreen from 'react-native-splash-screen';
 import rootReduccer from './reducers/rootReducer';
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from './saga/rootSaga';
-import { ScrollView } from 'react-native';
+import { Container, Header, View, Button, Icon, Fab } from 'native-base';
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(rootReduccer, applyMiddleware(sagaMiddleware));
 

@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.6.1",
+    "native-base": "^2.13.5",
     "react": "16.8.6",
     "react-native": "0.60.5",
     "react-native-facebook-account-kit": "^2.1.0",

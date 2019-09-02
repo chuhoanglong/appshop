@@ -40,7 +40,7 @@ const userManagerStack = createStackNavigator({
 });
 userManagerStack.navigationOptions = {
     tabBarLabel: 'USER',
-    tabBarIcon: ({focused}) => <Ionicons name={'user'} size={25} color={focused ? '#147efb' : 'black'}></Ionicons>
+    tabBarIcon: ({ focused }) => <Ionicons name={'user'} size={25} color={focused ? '#147efb' : 'black'}></Ionicons>
 }
 
 export default createBottomTabNavigator({ homeStack, cartStack, userManagerStack });

@@ -16,7 +16,11 @@ const getProducts = async () => {
 
 const getCartsFromAsyncStorage = async () => {
     const res = await AsyncStorage.getItem('carts');
-    return JSON.parse(res);
+    if(!!res){
+        return JSON.parse(res);
+    }else{
+        return [];
+    }
 }
 
 module.exports = {
