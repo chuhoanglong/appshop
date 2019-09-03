@@ -8,14 +8,20 @@ import CartContainer from '../../containers/CartContainer';
 import BuyCart from '../../components/screens/Cart/buyCart';
 import UserComponent from '../UserManager/UserComponent';
 
-const homeStack = createStackNavigator({
-    Home: {
-        screen: HomeContainer
+const homeStack = createStackNavigator(
+    {
+        Home: {
+            screen: HomeContainer
+        },
+        Products: {
+            screen: ProductContainer
+        }
     },
-    Products: {
-        screen: ProductContainer
+    {
+        mode: 'modal',
+        headerMode: 'none',
     }
-});
+);
 homeStack.navigationOptions = {
     tabBarLabel: 'HOME',
     tabBarIcon: ({ focused }) => <Ionicons name={'home'} size={25} color={focused ? '#147efb' : 'black'} />

@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, Image, StyleSheet, FlatList, Picker, Alert, TouchableOpacity,TouchableNativeFeedback } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import Swipeout from 'react-native-swipeout';
+import Icons from 'react-native-vector-icons/FontAwesome';
 export default class CartsComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -49,7 +50,7 @@ export default class CartsComponent extends React.Component {
                         <Swipeout
                             right={[
                                 {
-                                    text: 'Delete',
+                                    text: <Icons name='trash-o' size={25} color={'#FFF'}></Icons>,
                                     onPress: () => {
                                         Alert.alert(
                                             'DLETE',
@@ -84,11 +85,10 @@ export default class CartsComponent extends React.Component {
 
                                     },
                                     type: 'delete',
-                                    underlayColor: 'black',
                                 }
                             ]}
                             backgroundColor={'transparent'}
-                            buttonWidth={90}
+                            buttonWidth={60}
 
                         >
 
