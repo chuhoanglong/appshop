@@ -64,14 +64,14 @@ export default class Login extends Component {
                 <View style={styles.container}>
                     <Image
                         source={logo}
-                        style={{ width: 200, height: 40, marginTop: 100, alignSelf: 'center', }}
+                        style={{ width: 200, height: 40, marginTop: 50, alignSelf: 'center', }}
                     ></Image>
                     <Text style={[styles.containerLogin]}>LOGIN<Text style={[styles.containerLogin, { color: '#6cb693' }]}>.APPSHOP</Text></Text>
                     <View style={[styles.containerEnter]}>
 
-                        <Text style={{ fontSize: 12 }}>UserName:</Text>
+                        <Text style={{ fontSize: 12,fontWeight:'bold' }}>UserName:</Text>
                         <TextInput
-                            placeholder={'Type your username'}
+                            placeholder={'Enter your username !'}
                             keyboardType={'name-phone-pad'}
                             style={{ borderBottomColor: '#CCC', borderBottomWidth: 1, fontSize: 13 }}
                             onChangeText={
@@ -80,7 +80,7 @@ export default class Login extends Component {
                                 })
                             }
                         />
-                        <Text style={{ fontSize: 12, marginTop: 15 }}>Password:</Text>
+                        <Text style={{ fontSize: 12, marginTop: 15, fontWeight:'bold' }}>Password:</Text>
                         <View style={{
                             flexDirection: "row",
                             justifyContent: 'center',
@@ -91,8 +91,7 @@ export default class Login extends Component {
                         }}>
                             <Icon size={16} name='lock' style={{ alignSelf: 'center' }} />
                             <TextInput
-                                placeholder={'Type your password'}
-
+                                placeholder={'Enter your password !'}
                                 secureTextEntry={this.state.isSecureTextEntry}
                                 style={[styles.containerTxt]}
                                 onChangeText={
@@ -231,7 +230,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#787878',
         textAlign: 'center',
-        marginBottom: 100,
+        marginBottom: 50,
         borderBottomColor: '#005aa7',
         borderBottomWidth: 1,
     },
