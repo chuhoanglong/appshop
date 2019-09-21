@@ -12,8 +12,8 @@ import {
 } from 'react-native';
 import { Container, Header, Left, Body, Right, Title, Button, Icon } from 'native-base';
 import AsyncStorage from '@react-native-community/async-storage';
-import Icons from 'react-native-vector-icons/Ionicons'
-import Icons1 from 'react-native-vector-icons/FontAwesome'
+// import Icons from 'react-native-vector-icons/Ionicons'
+// import Icons1 from 'react-native-vector-icons/FontAwesome'
 
 export default class Products extends Component {
 
@@ -85,7 +85,7 @@ export default class Products extends Component {
                                 }
                             }
                         >
-                            <Icon name='arrow-back' style={{ color: '#000' }} />
+                            {/* <Icon name='arrow-back' style={{ color: '#000' }} /> */}
                         </TouchableOpacity>
                     </Left>
                     <Body>
@@ -104,7 +104,7 @@ export default class Products extends Component {
                             }
                         >
                             <View style={{ marginHorizontal: 16 }}>
-                                <Icons1 name='filter' size={30} />
+                                {/* <Icons1 name='filter' size={30} /> */}
                             </View>
                         </TouchableOpacity>
                         <TouchableOpacity
@@ -119,7 +119,7 @@ export default class Products extends Component {
                             }
                         >
                             <View style={{ marginHorizontal: 16 }}>
-                                <Icons name='ios-search' size={30} />
+                                {/* <Icons name='ios-search' size={30} /> */}
                             </View>
                         </TouchableOpacity>
                     </Right>
@@ -127,7 +127,7 @@ export default class Products extends Component {
                 {
                     this.state.isSearch && <TextInput
                         style={this.state.isTextFocusSearch ? styles.containerTxtSearchFocus : styles.containerTxtSearch}
-                        placeholder={'Enter Key Shearch!'}
+                        placeholder={'Enter key search...'}
                         value={this.state.textSearch}
                         onFocus={
                             () => {
@@ -166,7 +166,7 @@ export default class Products extends Component {
                             <View
                                 style={styles.containerFilterIcons}
                             >
-                                <Icons1 name={'sort-amount-desc'} color={'#4167b2'} size={25}></Icons1>
+                                {/* <Icons1 name={'sort-amount-desc'} color={'#4167b2'} size={25}></Icons1> */}
                             </View>
                         </TouchableOpacity>
                         <TouchableOpacity
@@ -181,7 +181,7 @@ export default class Products extends Component {
                             <View
                                 style={styles.containerFilterIcons}
                             >
-                                <Icons1 name={'sort-amount-asc'} color={'#4167b2'} size={25}></Icons1>
+                                {/* <Icons1 name={'sort-amount-asc'} color={'#4167b2'} size={25}></Icons1> */}
                             </View>
                         </TouchableOpacity>
                     </View>
@@ -230,7 +230,7 @@ export default class Products extends Component {
                         keyExtractor={(item) => `${item.id}`}
                         // số lượng cột hiển thị
                         numColumns={2}
-                        style={{ paddingHorizontal: 8 }}
+                        style={{ paddingHorizontal: 8,width:'100%', marginBottom:60 }}
                     />
                 </View>
             </Container>
@@ -254,7 +254,6 @@ const styles = StyleSheet.create({
         color: '#333',
     },
     container: {
-        flex: 1,
         paddingHorizontal: 8,
         paddingVertical: 16,
         backgroundColor: '#FFF',
@@ -301,6 +300,7 @@ const styles = StyleSheet.create({
     containerFilter: {
         flexDirection: 'row',
         justifyContent: 'flex-end',
+        marginBottom:7,
     },
     containerFilterTxt: {
         flex: 8,

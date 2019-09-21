@@ -36,7 +36,7 @@ const cartStack = createStackNavigator({
 });
 cartStack.navigationOptions = {
     tabBarLabel: 'CART',
-    tabBarIcon: ({ focused }) => <IconWithBadge name={'cart-plus'} size={25} color={focused ? '#147efb' : 'black'} />
+    tabBarIcon: ({ focused }) => <IconWithBadge name={'cart-plus'} size={23} color={focused ? '#147efb' : 'black'} />
 }
 
 const userManagerStack = createStackNavigator({
@@ -49,4 +49,17 @@ userManagerStack.navigationOptions = {
     tabBarIcon: ({ focused }) => <Ionicons name={'user'} size={25} color={focused ? '#147efb' : 'black'}></Ionicons>
 }
 
-export default createBottomTabNavigator({ homeStack, cartStack, userManagerStack });
+export default createBottomTabNavigator(
+    {
+        homeStack,
+        cartStack,
+        userManagerStack
+    },
+    {
+        tabBarOptions: {
+            resetOnBlur: true,
+            keyboardHidesTabBar: true
+        }
+
+    }
+);

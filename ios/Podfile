@@ -27,15 +27,11 @@ target 'appshop' do
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
-  pod 'RNReanimated', :path => '../node_modules/react-native-reanimated'
 
-  pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
 
-  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
-  pod 'RNAccountKit', :path => '../node_modules/react-native-facebook-account-kit'
 
-  pod 'react-native-splash-screen', :path => '../node_modules/react-native-splash-screen'
+
 
   target 'appshopTests' do
     inherit! :search_paths

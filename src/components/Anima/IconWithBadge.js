@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import Ionicons from 'react-native-vector-icons/FontAwesome5';
 import { connect } from 'react-redux';
+import { Icon } from 'native-base';
 
 
 class IconWithBadge extends React.Component {

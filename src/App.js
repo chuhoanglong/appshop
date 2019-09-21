@@ -6,7 +6,6 @@ import SplashScreen from 'react-native-splash-screen';
 import rootReduccer from './reducers/rootReducer';
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from './saga/rootSaga';
-import { Container, Header, View, Button, Icon, Fab } from 'native-base';
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(rootReduccer, applyMiddleware(sagaMiddleware));
 
@@ -18,9 +17,9 @@ export default class App extends React.Component {
   }
   render() {
     return (
-      <Provider store={store}>
+        <Provider store={store}>
           <AppNavigator></AppNavigator>
-      </Provider>
+        </Provider>
     );
   }
 };

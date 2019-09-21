@@ -1,6 +1,15 @@
 import React, { Component } from 'react';
-import { Text, Image, FlatList, StyleSheet, TouchableOpacity, Alert, Linking } from 'react-native';
-import FABsComponent from '../../Anima/FABsComponent';
+import {
+    Text,
+    Image,
+    FlatList,
+    StyleSheet,
+    TouchableOpacity,
+    Alert,
+    Linking,
+    SafeAreaView
+} from 'react-native';
+// import FABsComponent from '../../Anima/FABsComponent';
 import { Container, Header, View, Button, Icon, Fab } from 'native-base';
 
 
@@ -22,6 +31,7 @@ export default class Home extends Component {
 
         return (
             <Container>
+                <SafeAreaView>
                 <View>
                     <FlatList
                         data={this.props.categorys}
@@ -79,6 +89,7 @@ export default class Home extends Component {
                         </Button>
                     </Fab>
                 </View>
+                </SafeAreaView>
             </Container>
         );
     }
@@ -99,14 +110,14 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'stretch',
-        backgroundColor: '#F8F8F8',
+        backgroundColor: '#FFF',
         marginHorizontal: 8,
         marginVertical: 16,
         borderRadius: 10,
-        shadowColor: '#000',
-        shadowOpacity: 0.9,
-        shadowRadius: 4,
-        shadowOffset: { width: 0, height: 0 },
+        shadowColor: '#AAA',
+        shadowOpacity: 0.5,
+        shadowRadius: 10,
+        shadowOffset: { width: 0, height: 5 },
         elevation: 1
     }
 })

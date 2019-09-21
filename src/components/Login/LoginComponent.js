@@ -8,10 +8,12 @@ import {
     TouchableOpacity,
     Alert,
     Image,
-    KeyboardAvoidingView
+    KeyboardAvoidingView,
+    Platform
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon1 from 'react-native-vector-icons/Ionicons'
 import AsyncStore from '@react-native-community/async-storage';
 import RNAccountKit from 'react-native-facebook-account-kit';
 
@@ -60,7 +62,7 @@ export default class Login extends Component {
         const { navigate } = this.props.navigation;
 
         return (
-            <KeyboardAvoidingView style={{flex:1}} behavior='padding' enabled>
+            <KeyboardAvoidingView style={{ flex: 1 }} behavior='padding' enabled>
                 <View style={styles.container}>
                     <Image
                         source={logo}
@@ -69,18 +71,18 @@ export default class Login extends Component {
                     <Text style={[styles.containerLogin]}>LOGIN<Text style={[styles.containerLogin, { color: '#6cb693' }]}>.APPSHOP</Text></Text>
                     <View style={[styles.containerEnter]}>
 
-                        <Text style={{ fontSize: 12,fontWeight:'bold' }}>UserName:</Text>
+                        <Text style={{ fontSize: 12, fontWeight: 'bold' }}>UserName:</Text>
                         <TextInput
                             placeholder={'Enter your username !'}
                             keyboardType={'name-phone-pad'}
-                            style={{ borderBottomColor: '#CCC', borderBottomWidth: 1, fontSize: 13 }}
+                            style={styles.containerEnterUser}
                             onChangeText={
                                 (username) => this.setState({
                                     username
                                 })
                             }
                         />
-                        <Text style={{ fontSize: 12, marginTop: 15, fontWeight:'bold' }}>Password:</Text>
+                        <Text style={{ fontSize: 12, marginTop: 15, fontWeight: 'bold' }}>Password:</Text>
                         <View style={{
                             flexDirection: "row",
                             justifyContent: 'center',
@@ -121,7 +123,7 @@ export default class Login extends Component {
                             <Text style={[styles.containerCheckboxTxt]}>Forgot Password?</Text>
                         </View>
                         <LinearGradient
-                            start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#0092ff', '#c9bfff', '#c700fc']} style={[styles.linearGradient, { borderRadius: 50, marginVertical: 2 }]}
+                            start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#0092ff', '#1c92d2', '#1c92d2']} style={[styles.linearGradient, { borderRadius: 8, marginVertical: 10 }]}
                         >
 
                             <TouchableOpacity
@@ -138,7 +140,7 @@ export default class Login extends Component {
                                     }
                                 }
                             >
-                                <Text style={[styles.containerBtnTxt]}>LOGIN</Text>
+                                <Text style={[styles.containerBtnTxt]}>SKIP</Text>
                                 {
                                     this.state.isActivity && <ActivityIndicator
                                         size="small"
@@ -149,11 +151,11 @@ export default class Login extends Component {
                             </TouchableOpacity>
                         </LinearGradient>
                         <LinearGradient
-                            start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#0092ff', '#c9bfff', '#c700fc']} style={[styles.linearGradient, { borderRadius: 50, marginVertical: 2 }]}
+                            start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#4cc522', '#4cc522', '#4cc522']} style={[styles.linearGradient, { borderRadius: 8, marginVertical: 2 }]}
                         >
 
                             <TouchableOpacity
-                                style={[styles.containerBtn]}
+                                style={[styles.containerBtn, { flexDirection: 'row', justifyContent: 'center' }]}
                                 onPress={
                                     () => {
                                         RNAccountKit.loginWithPhone()
@@ -170,15 +172,16 @@ export default class Login extends Component {
                                     }
                                 }
                             >
+                                <Icon name={'mobile-phone'} size={30} color={'#FFF'} style={{ marginRight: 18 }}></Icon>
                                 <Text style={[styles.containerBtnTxt]}>LOGIN WITH NUMBER PHONE</Text>
                             </TouchableOpacity>
                         </LinearGradient>
                         <LinearGradient
-                            start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#0092ff', '#c9bfff', '#c700fc']} style={[styles.linearGradient, { borderRadius: 50, marginVertical: 2 }]}
+                            start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#f44336', '#f44336', '#f44336']} style={[styles.linearGradient, { borderRadius: 8, marginVertical: 10 }]}
                         >
 
                             <TouchableOpacity
-                                style={[styles.containerBtn]}
+                                style={[styles.containerBtn, { flexDirection: 'row', justifyContent: 'center' }]}
                                 onPress={
                                     () => {
                                         RNAccountKit.loginWithEmail()
@@ -192,23 +195,30 @@ export default class Login extends Component {
                                     }
                                 }
                             >
+                                <Icon1 name={'ios-mail'} size={30} color={'#FFF'} style={{ marginRight: 18 }}></Icon1>
                                 <Text style={[styles.containerBtnTxt]}>LOGIN WITH EMAIL</Text>
                             </TouchableOpacity>
                         </LinearGradient>
                         <Text style={{ textAlign: 'center', fontSize: 12, color: '#BBB', marginTop: 10 }}>Or Sign Up Using</Text>
                     </View>
                     <View style={[styles.containerIcon]}>
-
-                        <View style={{ marginHorizontal: 8, width: 40, height: 40, borderRadius: 100, backgroundColor: '#00336B', justifyContent: 'center', alignSelf: 'center' }}>
-                            <Icon name='facebook' size={25} color={'white'}
-                                style={{ alignSelf: 'center' }}></Icon>
+                        <View style={{ marginHorizontal: 10 }}>
+                            <View style={{ marginHorizontal: 8, width: 40, height: 40, borderRadius: 100, backgroundColor: '#00336B', justifyContent: 'center', alignSelf: 'center' }}>
+                                <Icon name='facebook' size={25} color={'white'} style={{ alignSelf: 'center' }} />
+                            </View>
+                            <Text>Facebook</Text>
                         </View>
-                        <View style={{ marginHorizontal: 8, width: 40, height: 40, borderRadius: 100, backgroundColor: '#2181C4', justifyContent: 'center', alignSelf: 'center' }}>
-                            <Icon name='twitter' size={25} color={'white'}
-                                style={{ alignSelf: 'center' }}></Icon>
+                        <View style={{ marginHorizontal: 10 }}>
+                            <View style={{ marginHorizontal: 8, width: 40, height: 40, borderRadius: 100, backgroundColor: '#2181C4', justifyContent: 'center', alignSelf: 'center' }}>
+                                <Icon name='twitter' size={25} color={'white'} style={{ alignSelf: 'center' }} />
+                            </View>
+                            <Text>Twiter</Text>
                         </View>
-                        <View style={{ marginHorizontal: 8, width: 40, height: 40, borderRadius: 100, backgroundColor: '#C10000', justifyContent: 'center', alignSelf: 'center' }}>
-                            <Icon name='google' size={25} color={'white'} style={{ marginHorizontal: 8 }}></Icon>
+                        <View style={{ marginHorizontal: 10 }}>
+                            <View style={{ marginHorizontal: 8, width: 40, height: 40, borderRadius: 100, backgroundColor: '#C10000', justifyContent: 'center', alignSelf: 'center' }}>
+                                <Icon name='google' size={25} color={'white'} style={{ marginHorizontal: 8 }} />
+                            </View>
+                            <Text>Google</Text>
                         </View>
 
                     </View>
@@ -242,7 +252,8 @@ const styles = StyleSheet.create({
     containerTxt: {
         flex: 1,
         height: 50,
-        fontSize: 13
+        fontSize: 15,
+        marginLeft:10
 
     },
     containerCheckbox: {
@@ -273,6 +284,14 @@ const styles = StyleSheet.create({
     containerIcon: {
         flexDirection: 'row',
         justifyContent: 'center',
-        marginTop: 20
+        marginTop: 40,
+    },
+    containerEnterUser:{
+        borderBottomColor: '#CCC', 
+        borderBottomWidth: 1, 
+        fontSize: 15, 
+        paddingLeft:15, 
+        paddingVertical:15,
+        
     }
 })

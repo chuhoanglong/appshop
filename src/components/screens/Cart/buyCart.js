@@ -200,12 +200,12 @@ export default class BuyCart extends React.Component {
                     ></CheckBox>
 
                 </View>
-                <TouchableNativeFeedback
+                <TouchableOpacity
                 >
                     <View style={styles.btnBuy}>
                         <Text style={{ color: '#FFF' }}>BUY</Text>
                     </View>
-                </TouchableNativeFeedback>
+                </TouchableOpacity>
                 {/* </KeyboardAvoidingView> */}
             </ScrollView>
         );

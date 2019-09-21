@@ -144,7 +144,7 @@ export default class CartsComponent extends React.Component {
                 }
                 {
                     !!this.props.carts.length &&
-                    <TouchableNativeFeedback
+                    <TouchableOpacity
                         onPress={
                             ()=>{
                                 this.props.navigation.navigate('BuyCart');
@@ -154,7 +154,7 @@ export default class CartsComponent extends React.Component {
                         <View style={styles.btnBuy}>
                             <Text style={{ color: '#FFF' }}>BUY<Text style={{fontSize:18}}>  ${this.sumPrice()}</Text></Text>
                         </View>
-                    </TouchableNativeFeedback>
+                    </TouchableOpacity>
                 }
             </View>
         )
