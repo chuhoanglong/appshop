@@ -83,7 +83,7 @@ export default class BuyCart extends React.Component {
                     <Text style={styles.containerText}>Tinh/Thanh Pho:</Text>
                     <Picker
                     // selectedValue={item.size}
-                    // style={{ height: 20, flex: 1 }}
+                    itemStyle={{ height: 50, flex: 0 }}
                     // onValueChange={(itemValue) => {
                     //     const newCarts = this.handleChangeSize(item.id, itemValue);
                     //     this.props.onChangeSize(newCarts);

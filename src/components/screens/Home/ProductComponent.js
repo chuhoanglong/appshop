@@ -189,14 +189,14 @@ export default class Products extends Component {
                 }
                 <View>
                     {
-                        this.props.isLoading && <ActivityIndicator size="large" color="#0000ff" />
+                        this.props.isLoading && <ActivityIndicator size="small" color="#1c92d2" />
                     }
                     <FlatList
                         data={this.dataSearchOrFilter()}
                         // render từng item có trong data phía trên.
                         renderItem={({ item }) => (
                             <View style={[styles.container]}>
-                                <Image source={{ uri: item.url }} style={{ width: 160, height: 160 }}></Image>
+                                <Image source={{ uri: item.url }} style={{ width: 150, height: 150 }}></Image>
                                 <View style={[styles.info]}>
                                     <Text style={{ marginLeft: 4 }}>{item.name}</Text>
                                     <Text style={{ marginRight: 4 }}>${item.price}</Text>
@@ -230,7 +230,7 @@ export default class Products extends Component {
                         keyExtractor={(item) => `${item.id}`}
                         // số lượng cột hiển thị
                         numColumns={2}
-                        style={{ paddingHorizontal: 8,width:'100%', marginBottom:60 }}
+                        style={{ paddingHorizontal: 4,width:'100%', marginBottom:60 }}
                     />
                 </View>
             </Container>
@@ -254,6 +254,7 @@ const styles = StyleSheet.create({
         color: '#333',
     },
     container: {
+        width: 170,
         paddingHorizontal: 8,
         paddingVertical: 16,
         backgroundColor: '#FFF',
@@ -261,20 +262,24 @@ const styles = StyleSheet.create({
         marginVertical: 16,
         borderRadius: 10,
         shadowColor: '#000',
-        shadowOpacity: 1,
+        shadowOpacity: 0.2,
         shadowRadius: 4,
-        shadowOffset: { width: 0, height: 0 },
+        shadowOffset: { width: 0, height: 5 },
         elevation: 1
     },
     containerBtn: {
         height: 40,
-        backgroundColor: '#999',
+        backgroundColor: '#1c92c0',
         borderRadius: 10,
         borderColor: '#DDD',
         borderWidth: 1,
         marginTop: 4,
         justifyContent: 'center',
         alignItems: 'center',
+        shadowColor: '#000',
+        shadowOpacity: 0.3,
+        shadowRadius: 4,
+        shadowOffset: { width: 0, height: 8 },
     },
     containerTxtAdd: {
         color: '#EEE',

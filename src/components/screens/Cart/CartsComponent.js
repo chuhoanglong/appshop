@@ -1,5 +1,16 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, FlatList, Picker, Alert, TouchableOpacity,TouchableNativeFeedback } from 'react-native';
+import {
+    View,
+    Text,
+    Image,
+    StyleSheet,
+    FlatList,
+    Picker,
+    PickerIOS,
+    Alert,
+    TouchableOpacity,
+    Platform
+} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import Swipeout from 'react-native-swipeout';
 import Icons from 'react-native-vector-icons/FontAwesome';
@@ -33,7 +44,7 @@ export default class CartsComponent extends React.Component {
         return newCarts;
     }
 
-    sumPrice(){
+    sumPrice() {
         let buy = 0;
         for (const item of this.props.carts) {
             buy += parseInt(item.price);
@@ -95,21 +106,19 @@ export default class CartsComponent extends React.Component {
                             <View style={[styles.container]}>
                                 <Image source={{ uri: item.url }} style={{ width: 170, height: 120, flex: 1 }}></Image>
                                 <View style={[styles.info]}>
-                                    <Text style={{ fontSize: 20 }}>{item.name}</Text>
+                                    <Text style={{ fontSize: 20,marginVertical:5 }}>{item.name}</Text>
                                     <Text style={{ fontSize: 15 }}>Color: {item.color}</Text>
                                     <Text style={{ fontSize: 15 }}>Price: ${item.price}</Text>
-
-                                    {/* tuy chon size */}
-                                    <View style={{ flex: 1, flexDirection: 'row', }}>
+                                    <View style={{ flex: 1, flexDirection: 'row' }}>
                                         <Text style={{ flex: 1 }}>Size: </Text>
                                         <Picker
                                             selectedValue={item.size}
-                                            style={{ height: 20, flex: 1 }}
+                                            style={{ height: 20, flex: 1, width: 50 }}
+                                            itemStyle={{width:30,height:42,marginTop:-14,marginHorizontal:-50}}
                                             onValueChange={(itemValue) => {
                                                 const newCarts = this.handleChangeSize(item.id, itemValue);
                                                 this.props.onChangeSize(newCarts);
                                             }}
-
                                         >
                                             <Picker.Item label="36" value="36" />
                                             <Picker.Item label="37" value="37" />
@@ -117,9 +126,7 @@ export default class CartsComponent extends React.Component {
                                             <Picker.Item label="39" value="39" />
                                             <Picker.Item label="40" value="40" />
                                         </Picker>
-                                        {/* ket thuc phan tuy chinh size */}
                                     </View>
-
                                 </View>
                             </View>
                         </Swipeout>
@@ -146,13 +153,13 @@ export default class CartsComponent extends React.Component {
                     !!this.props.carts.length &&
                     <TouchableOpacity
                         onPress={
-                            ()=>{
+                            () => {
                                 this.props.navigation.navigate('BuyCart');
                             }
                         }
                     >
                         <View style={styles.btnBuy}>
-                            <Text style={{ color: '#FFF' }}>BUY<Text style={{fontSize:18}}>  ${this.sumPrice()}</Text></Text>
+                            <Text style={{ color: '#FFF' }}>BUY<Text style={{ fontSize: 18 }}>  ${this.sumPrice()}</Text></Text>
                         </View>
                     </TouchableOpacity>
                 }
@@ -170,18 +177,16 @@ const styles = StyleSheet.create({
         alignItems: 'stretch',
         backgroundColor: '#fff',
         marginHorizontal: 8,
-        marginVertical: 16,
-        borderRadius: 4,
+        marginVertical: 10,
+        borderRadius: 10,
         shadowColor: '#000',
-        shadowOpacity: 0.9,
+        shadowOpacity: 0.19,
         shadowRadius: 10,
-        shadowOffset: { width: 0, height: 0 },
+        shadowOffset: { width: 0, height: 5 },
         elevation: 1,
-        fontFamily: 'Raleway'
-
     },
     info: {
-        flex: 1
+        flex: 1,
     },
     CartsEmpty: {
         flex: 10,
