@@ -104,7 +104,8 @@ const styles = StyleSheet.create({
     txtName: {
         fontSize: 21,
         fontWeight: "bold",
-        textAlign: 'center'
+        textAlign: 'center',
+        paddingBottom:8
     },
     container: {
         flex: 1,

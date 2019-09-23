@@ -172,10 +172,11 @@ export default class BuyCart extends React.Component {
                     />
                     <Text style={{fontStyle:'italic',color:'#AAA'}}>Để nhận hàng thuận tiện hơn, bạn vui lòng cho Tiki biết loại địa chỉ.</Text>
                     <Text style={styles.containerText}>Loai Dia Chi:</Text>
-                    <Text>Nhà riêng / Chung cư</Text>
+                    <View style={styles.containerCheckBox}>
                     <CheckBox
                         testID='Nhà riêng / Chung cư'
                         value={!this.state.isCheckbox}
+                        style={{alignSelf:'center', width:15,height:15, marginRight:10}}
                         onValueChange={
                             () => {
                                 this.setState({
@@ -185,10 +186,13 @@ export default class BuyCart extends React.Component {
                             }
                         }
                     ></CheckBox>
-                    <Text>Cơ quan / Công ty</Text>
+                    <Text>Nhà riêng / Chung cư</Text>
+                    </View>
+                    <View style={styles.containerCheckBox}>
                     <CheckBox
                         testID='Cơ quan / Công ty'
                         value={this.state.isCheckbox}
+                        style={{alignSelf:'center', width:15,height:15, marginRight:10}}                        
                         onValueChange={
                             () => {
                                 this.setState({
@@ -198,7 +202,8 @@ export default class BuyCart extends React.Component {
                             }
                         }
                     ></CheckBox>
-
+                    <Text>Cơ quan / Công ty</Text>
+                    </View>
                 </View>
                 <TouchableOpacity
                 >
@@ -228,6 +233,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 10
     },
     containerTextInput: {
+        height:50,
         borderBottomWidth: 1,
         borderBottomColor: '#DDD',
         marginHorizontal: 0,
@@ -235,6 +241,7 @@ const styles = StyleSheet.create({
         marginTop: -10
     },
     containerTextInputActive: {
+        height:50,
         borderBottomWidth: 1,
         borderBottomColor: '#147efb',
         marginHorizontal: 0,
@@ -244,5 +251,8 @@ const styles = StyleSheet.create({
     containerText:{
             fontSize: 16,
             fontWeight:'bold'
+    },
+    containerCheckBox:{
+        flexDirection:'row'
     }
 })
