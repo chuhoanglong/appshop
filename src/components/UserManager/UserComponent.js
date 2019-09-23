@@ -1,28 +1,18 @@
 import React, { useState } from 'react';
-import { View, Text, Image, StyleSheet, BackHandler, TextInput, Button, Alert } from 'react-native';
+import {
+    View,
+    Text,
+    Image,
+    StyleSheet,
+    BackHandler,
+    TextInput,
+    Button,
+    Alert,
+    TouchableOpacity
+} from 'react-native';
 import Modal from 'react-native-modal'
 import AsyncStorage from '@react-native-community/async-storage';
-const styles = StyleSheet.create({
-    accountUser: {
-        width: '100%',
-        flex: 1,
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        position: 'relative',
 
-    },
-    accountUserName: {
-        fontSize: 23,
-        fontWeight: 'bold',
-        fontStyle: 'italic',
-    },
-    accountInfo: {
-        position: 'absolute',
-        zIndex: 2,
-        top: 90
-
-    }
-})
 
 export default class User extends React.Component {
     constructor(props) {
@@ -33,6 +23,27 @@ export default class User extends React.Component {
         }
     }
     static navigationOptions = ({ navigation }) => ({ title: 'USER' })
+
+    onClickLogOut = () => {
+        Alert.alert(
+            'LOG OUT',
+            'You Want To Log Out?',
+            [
+                {
+                    text: 'Cancel',
+                    style: 'cancel'
+                },
+                {
+                    text: 'OK',
+                    onPress: () => {
+                        AsyncStorage.removeItem('token');
+                        this.props.navigation.navigate('Login');
+                    }
+                }
+            ]
+
+        )
+    }
 
     render() {
         return (
@@ -54,22 +65,7 @@ export default class User extends React.Component {
                         <Text style={[styles.accountUserName]}>Linh Nguyen</Text>
                     </View>
                 </View>
-                <View style={{
-                    flex: 1,
-                    fontSize: 23,
-                    paddingHorizontal: 16,
-                    borderRadius: 10,
-                    borderWidth: 0.5,
-                    borderColor: '#DDD',
-                    shadowRadius: 10,
-                    shadowColor: "#DDD",
-                    shadowOpacity: 1,
-                    shadowOffset: { width: 0, height: 0 },
-                    position: 'absolute',
-                    top: '55%',
-                    width: '100%',
-
-                }}>
+                <View style={styles.accountAddress}>
                     <Text
                         onPress={
                             () => {
@@ -83,46 +79,28 @@ export default class User extends React.Component {
                     <Text>Phone Number: 098888888</Text>
                     <Text>Email: LinhNguyen@yahoo.com</Text>
                 </View>
-                <View style={{
-                    flex: 1,
-                    marginTop: 180,
-                    fontWeight: 'bold',
-                    fontSize: 24,
-                }}>
-                    <Text style={{ color: '#1E96DD' }}>Change Password</Text>
-                    <Text
-                        style={{ color: '#1E96DD' }}
+                <View style={styles.wrapBtn}>
+                    <TouchableOpacity style={styles.btn}>
+                        <Text style={styles.txt}>Change Password</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={styles.btn}
                         onPress={
-                            () => {
-                                Alert.alert(
-                                    'LOG OUT',
-                                    'You Want To Log Out?',
-                                    [
-                                        {
-                                            text: 'Cancel',
-                                            style: 'cancel'
-                                        },
-                                        {
-                                            text: 'OK',
-                                            onPress: () => {
-                                                AsyncStorage.removeItem('token');
-                                                this.props.navigation.navigate('Login');
-                                            }
-                                        }
-                                    ]
-
-                                )
-                            }
+                            this.onClickLogOut
                         }
-                    >Log Out</Text>
-                    <Text
-                        style={{ color: '#1E96DD' }}
+                    >
+                        <Text style={styles.txt}>Log Out</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={styles.btn}
                         onPress={
                             () => {
                                 BackHandler.exitApp();
                             }
                         }
-                    >Exit App</Text>
+                    >
+                        <Text style={styles.txt}>Exit App</Text>
+                    </TouchableOpacity>
                 </View>
 
 
@@ -175,3 +153,59 @@ const ModalView = (props) => {
         </View>
     )
 }
+const styles = StyleSheet.create({
+    accountUser: {
+        width: '100%',
+        flex: 0.4,
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        position: 'relative',
+    },
+    accountUserName: {
+        fontSize: 23,
+        fontWeight: 'bold',
+        fontStyle: 'italic',
+    },
+    accountInfo: {
+        position: 'absolute',
+        zIndex: 2,
+        top: 90
+
+    },
+    accountAddress: {
+        flex: 0.3,
+        paddingHorizontal: 16,
+        justifyContent: 'flex-start',
+        paddingTop: 20,
+        borderWidth: 1,
+        borderRadius: 20,
+        borderColor: '#CCC',
+        marginHorizontal: 5,
+    },
+    txt: {
+        color: '#1E96DD',
+        alignSelf: 'center'
+    },
+    btn: {
+        height: 30,
+        width: '95%',
+        borderWidth: 1,
+        borderRadius: 10,
+        borderColor: '#EED',
+        backgroundColor: '#DDD',
+        justifyContent: 'center',
+        alignSelf: 'center',
+        marginVertical: 3
+    },
+    wrapBtn: {
+        marginTop: 5,
+        borderBottomColor: '#EEE',
+        borderWidth: 1,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+        flex: 0.3,
+        justifyContent: 'flex-end',
+        borderColor: '#DDD',
+        marginHorizontal: 5
+    }
+})
