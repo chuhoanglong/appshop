@@ -5,13 +5,13 @@ import {call, put, takeEvery, takeLatest} from 'redux-saga/effects';
 import Api from './Api';
 
 // tao cac saga de thuc hien nhiem vu.
-function* FetchProducts(){
+function* FetchProducts(action){
     console.log("FetchProducts");
     let isLoading = false;
     
     try {
         // lay products cua ben api tra ve
-        const products = yield Api.getProducts();
+        const products = yield Api.getProducts(action.category);
         // neu yield tren thuc hien thanh cong thi chay yield duoi
         // du lieu lay thanh cong thi dispatch action.
         yield put({type:Types.FETCH_SUCCESS_PRODUCTS,products,isLoading});

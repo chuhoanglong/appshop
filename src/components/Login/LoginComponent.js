@@ -29,6 +29,55 @@ export default class Login extends Component {
         }
     }
 
+    onClickLogin() {
+        this.setState({ isActivity: !this.state.isActivity });
+        const user = {
+            name: this.state.username,
+            pass: this.state.password
+        }
+        new Promise((resolve, reject) => {
+            user.resolve = resolve;
+            user.reject = reject;
+            this.props.loginUser(user);
+        }).then(res => {
+            if (this.props.status == 200) {
+                AsyncStore.setItem('token', 'thisisthetoken');
+                this.setState({ isActivity: !this.state.isActivity });
+                this.props.navigation.navigate('Home');
+                Alert.alert(this.props.message);
+            } else {
+                Alert.alert(this.props.message);
+            }
+        }).catch(err => {
+            Alert.alert(err);
+        })
+    }
+
+    hanlderAccountKitPhone() {
+        RNAccountKit.loginWithPhone()
+            .then((token) => {
+                if (!token) {
+                    console.log('Login cancelled');
+                } else {
+                    console.log(`Logged with phone. Token: ${token}`);
+                    AsyncStore.setItem('token', 'thisisthetoken');
+                    this.setState({ isActivity: !this.state.isActivity });
+                    navigate('Home');
+                }
+            })
+    }
+
+    hanlderAccountKitEmail() {
+        RNAccountKit.loginWithEmail()
+            .then((token) => {
+                if (!token) {
+                    console.log('Login cancelled')
+                } else {
+                    console.log(`Logged with email. Token: ${token}`)
+                }
+            })
+    }
+
     componentWillMount() {
         RNAccountKit.configure({
             responseType: 'token', // 'token' by default,
@@ -129,22 +178,14 @@ export default class Login extends Component {
                             <TouchableOpacity
                                 style={[styles.containerBtn]}
                                 onPress={
-                                    () => {
-                                        this.setState({ isActivity: !this.state.isActivity });
-                                        // const { username, password } = this.state;
-                                        setTimeout(async () => {
-                                            AsyncStore.setItem('token', 'thisisthetoken');
-                                            this.setState({ isActivity: !this.state.isActivity });
-                                            navigate('Home');
-                                        }, 3000)
-                                    }
+                                    this.onClickLogin.bind(this)
                                 }
                             >
                                 <Text style={[styles.containerBtnTxt]}>SKIP</Text>
                                 {
                                     this.state.isActivity && <ActivityIndicator
                                         size="small"
-                                        color="#8a4af3"
+                                        color="#000"
                                         style={{ top: 10, position: 'absolute', zIndex: 9, alignSelf: 'center', }}
                                     ></ActivityIndicator>
                                 }
@@ -157,19 +198,7 @@ export default class Login extends Component {
                             <TouchableOpacity
                                 style={[styles.containerBtn, { flexDirection: 'row', justifyContent: 'center' }]}
                                 onPress={
-                                    () => {
-                                        RNAccountKit.loginWithPhone()
-                                            .then((token) => {
-                                                if (!token) {
-                                                    console.log('Login cancelled')
-                                                } else {
-                                                    console.log(`Logged with phone. Token: ${token}`);
-                                                    AsyncStore.setItem('token', 'thisisthetoken');
-                                                    this.setState({ isActivity: !this.state.isActivity });
-                                                    navigate('Home');
-                                                }
-                                            })
-                                    }
+                                    this.hanlderAccountKitPhone.bind(this)
                                 }
                             >
                                 <Icon name={'mobile-phone'} size={30} color={'#FFF'} style={{ marginRight: 18 }}></Icon>
@@ -183,16 +212,7 @@ export default class Login extends Component {
                             <TouchableOpacity
                                 style={[styles.containerBtn, { flexDirection: 'row', justifyContent: 'center' }]}
                                 onPress={
-                                    () => {
-                                        RNAccountKit.loginWithEmail()
-                                            .then((token) => {
-                                                if (!token) {
-                                                    console.log('Login cancelled')
-                                                } else {
-                                                    console.log(`Logged with email. Token: ${token}`)
-                                                }
-                                            })
-                                    }
+                                    this.hanlderAccountKitEmail.bind(this)
                                 }
                             >
                                 <Icon1 name={'ios-mail'} size={30} color={'#FFF'} style={{ marginRight: 18 }}></Icon1>
@@ -253,7 +273,7 @@ const styles = StyleSheet.create({
         flex: 1,
         height: 50,
         fontSize: 15,
-        marginLeft:10
+        marginLeft: 10
 
     },
     containerCheckbox: {
@@ -286,12 +306,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginTop: 40,
     },
-    containerEnterUser:{
-        borderBottomColor: '#CCC', 
-        borderBottomWidth: 1, 
-        fontSize: 15, 
-        paddingLeft:15, 
-        paddingVertical:15,
-        
+    containerEnterUser: {
+        borderBottomColor: '#CCC',
+        borderBottomWidth: 1,
+        fontSize: 15,
+        paddingLeft: 15,
+        paddingVertical: 15,
+
     }
 })

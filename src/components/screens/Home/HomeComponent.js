@@ -38,7 +38,7 @@ export default class Home extends Component {
                         renderItem={({ item }) => (
                             <TouchableOpacity
                                 onPress={() => {
-                                    this.props.showProductTask(true);
+                                    this.props.showProductTask(true,item.name);
                                     // navigate di chuyển sang màn hình Products và truyền dữ liệ qua Products
                                     navigate('Products', {
                                         category: item.name

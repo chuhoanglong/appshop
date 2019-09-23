@@ -9,8 +9,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        showProductTask: (isLoading) => {
-            dispatch(showProductTask(isLoading));
+        showProductTask: (isLoading,category) => {
+            dispatch(showProductTask(isLoading,category));
         },
         getCarts: ()=>{
             dispatch(getCarts());
