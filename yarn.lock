@@ -5528,10 +5528,22 @@ react-native-modal@^11.3.1:
     prop-types "^15.6.2"
     react-native-animatable "^1.3.1"
 
+react-native-momosdk@^1.3.4:
+  version "1.3.4"
+  resolved "https://registry.yarnpkg.com/react-native-momosdk/-/react-native-momosdk-1.3.4.tgz#5aa458836262e262d201123f0ec9a754a7f8a1a1"
+  integrity sha512-4xDEVE6N/uH2EBO2Jp0vGI0LVeOvgLllVh+RvjEaAe3o/3DqdRaHbaBuFxyIOMY00XV7jCW71obsb+lSozY0PQ==
+  dependencies:
+    react-timer-mixin "^0.13.4"
+
 react-native-reanimated@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-1.2.0.tgz#9219227a52a5dfa4d34c324596d6726ccd874293"
   integrity sha512-vkWRHrPK5qfHP/ZawlRoo38oeYe9NZaaOH/lmFxRcsKzaSK6x3H5ZPXI8lK6MfTLveqwo1QhJje3zIKXO4nQQw==
+
+react-native-rsa@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/react-native-rsa/-/react-native-rsa-0.0.3.tgz#c3b5b85278e8a1a3ef22b4206a7d6aa04a26d99b"
+  integrity sha1-w7W4UnjooaPvIrQgan1qoEom2Zs=
 
 react-native-safe-area-view@^0.14.1:
   version "0.14.7"

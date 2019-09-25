@@ -14,6 +14,7 @@ PODS:
     - DoubleConversion
     - glog
   - glog (0.3.5)
+  - MoMoiOSsdkv2 (2.3.0)
   - React (0.60.5):
     - React-Core (= 0.60.5)
     - React-DevSupport (= 0.60.5)
@@ -91,6 +92,8 @@ PODS:
     - React
   - RNGestureHandler (1.3.0):
     - React
+  - RNMomosdk (1.3.1):
+    - React
   - RNReanimated (1.2.0):
     - React
   - RNVectorIcons (6.6.0):
@@ -102,6 +105,7 @@ DEPENDENCIES:
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - Folly (from `../node_modules/react-native/third-party-podspecs/Folly.podspec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
+  - MoMoiOSsdkv2 (from `https://github.com/momodevelopment/MoMoiOSsdkv2.git`, branch `master`)
   - React (from `../node_modules/react-native/`)
   - React-Core (from `../node_modules/react-native/React`)
   - React-cxxreact (from `../node_modules/react-native/ReactCommon/cxxreact`)
@@ -123,6 +127,7 @@ DEPENDENCIES:
   - RNAccountKit (from `../node_modules/react-native-facebook-account-kit/ios`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-community/async-storage`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
+  - RNMomosdk (from `../node_modules/react-native-momosdk`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
@@ -141,6 +146,9 @@ EXTERNAL SOURCES:
     :podspec: "../node_modules/react-native/third-party-podspecs/Folly.podspec"
   glog:
     :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
+  MoMoiOSsdkv2:
+    :branch: master
+    :git: https://github.com/momodevelopment/MoMoiOSsdkv2.git
   React:
     :path: "../node_modules/react-native/"
   React-Core:
@@ -183,12 +191,19 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/async-storage"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
+  RNMomosdk:
+    :path: "../node_modules/react-native-momosdk"
   RNReanimated:
     :path: "../node_modules/react-native-reanimated"
   RNVectorIcons:
     :path: "../node_modules/react-native-vector-icons"
   yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
+
+CHECKOUT OPTIONS:
+  MoMoiOSsdkv2:
+    :commit: 57a71fa020f139e863773749414102418e5d22d9
+    :git: https://github.com/momodevelopment/MoMoiOSsdkv2.git
 
 SPEC CHECKSUMS:
   AccountKit: d05258857e74b04386c263a1365b27dbb5ff62b9
@@ -197,6 +212,7 @@ SPEC CHECKSUMS:
   DoubleConversion: 5805e889d232975c086db112ece9ed034df7a0b2
   Folly: 30e7936e1c45c08d884aa59369ed951a8e68cf51
   glog: 1f3da668190260b06b429bb211bfbee5cd790c28
+  MoMoiOSsdkv2: b6044c6b21078b21277a839b780803fb88cde537
   React: 53c53c4d99097af47cf60594b8706b4e3321e722
   React-Core: ba421f6b4f4cbe2fb17c0b6fc675f87622e78a64
   React-cxxreact: 8384287780c4999351ad9b6e7a149d9ed10a2395
@@ -218,10 +234,11 @@ SPEC CHECKSUMS:
   RNAccountKit: 67ef232dfe7dda545e605630169ae245ac4dae3e
   RNCAsyncStorage: 2e2e3feb9bdadc752a026703d8c4065ca912e75a
   RNGestureHandler: 5329a942fce3d41c68b84c2c2276ce06a696d8b0
+  RNMomosdk: 250cc7423c370f1fc34b95499c68e4cf0c097c92
   RNReanimated: 1b52415c4302f198cb581282a0166690bad62c43
   RNVectorIcons: 0bb4def82230be1333ddaeee9fcba45f0b288ed4
   yoga: 312528f5bbbba37b4dcea5ef00e8b4033fdd9411
 
-PODFILE CHECKSUM: fdaf5fdc3f3dbdee76a07f3b37a9dcbe6ecd0e49
+PODFILE CHECKSUM: 5c574c19b5dcf168f3a47f883d94c80bd0df791a
 
 COCOAPODS: 1.7.5

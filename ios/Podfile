@@ -33,6 +33,9 @@ target 'appshop' do
 
 
 
+  pod 'RNMomosdk', :path => '../node_modules/react-native-momosdk'
+ 
+  pod 'MoMoiOSsdkv2', :git => 'https://github.com/momodevelopment/MoMoiOSsdkv2.git',:branch => "master"
   target 'appshopTests' do
     inherit! :search_paths
     # Pods for testing

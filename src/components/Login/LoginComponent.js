@@ -62,7 +62,7 @@ export default class Login extends Component {
                     console.log(`Logged with phone. Token: ${token}`);
                     AsyncStore.setItem('token', 'thisisthetoken');
                     this.setState({ isActivity: !this.state.isActivity });
-                    navigate('Home');
+                    this.props.navigation.navigate('Home');
                 }
             })
     }
@@ -73,7 +73,10 @@ export default class Login extends Component {
                 if (!token) {
                     console.log('Login cancelled')
                 } else {
-                    console.log(`Logged with email. Token: ${token}`)
+                    console.log(`Logged with email. Token: ${token}`);
+                    AsyncStore.setItem('token', 'thisisthetoken');
+                    this.setState({ isActivity: !this.state.isActivity });
+                    this.props.navigation.navigate('Home');
                 }
             })
     }

@@ -11,6 +11,7 @@
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 #import "RNSplashScreen.h"  // here
+#import "RNMomosdk.h"
 
 @implementation AppDelegate
 
@@ -29,6 +30,11 @@
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
   [RNSplashScreen show];  // here
+  
+  return YES;
+}
+-(BOOL)application:(UIApplication *)app openURL:(nonnull NSURL *)url options:(nonnull NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options{
+  [RNMomosdk handleOpenUrl:url];
   return YES;
 }
 

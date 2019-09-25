@@ -91,5 +91,25 @@
   <string>Octicons.ttf</string>
   <string>Zocial.ttf</string>
 </array>
+<key>CFBundleURLTypes</key>
+ <array>
+   <dict>
+     <key>CFBundleURLName</key>
+     <string></string>
+     <key>CFBundleURLSchemes</key>
+     <array>
+       <string>momozqhx20190923</string>
+     </array>
+   </dict>
+ </array>
+ <key>LSApplicationQueriesSchemes</key>
+ <array>
+   <string>momo</string>
+ </array>
+ <key>NSAppTransportSecurity</key>
+ <dict>
+   <key>NSAllowsArbitraryLoads</key>
+   <true/>
+ </dict>
 </dict>
 </plist>

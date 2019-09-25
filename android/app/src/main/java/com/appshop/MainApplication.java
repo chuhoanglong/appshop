@@ -1,14 +1,15 @@
 package com.appshop;
 
 import android.app.Application;
+import android.os.Bundle;
 
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import com.reactlibrary.RNMomosdkPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.oblador.vectoricons.VectorIconsPackage;
-
 import java.util.List;
 
 public class MainApplication extends Application implements ReactApplication {
@@ -27,7 +28,7 @@ public class MainApplication extends Application implements ReactApplication {
 //       packages.add(new MyReactNativePackage());
 //      packages.add(new SplashScreenReactPackage());
       //      packages.add(new VectorIconsPackage());
-
+//      new RNMomosdkPackage();
       return packages;
     }
 
