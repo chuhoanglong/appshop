@@ -42,7 +42,7 @@ export default class BuyCart extends React.Component {
             description: "",
             processing: false,
             merchantname: "APPSHOP",// 
-            merchantcode: "MOMOZQHX20190923",
+            merchantcode: "MOMOIQA420180417",
             merchantNameLabel: "App Shop",
             billdescription: "Fast and Furious 8",
             amount: 0,
@@ -56,43 +56,6 @@ export default class BuyCart extends React.Component {
         }
     }
     componentDidMount() {
-        
-        // const key = new NodeRSA({ b: 512 });
-
-        // const text = 'Hello RSA!';
-        // const encrypted = key.encrypt(text, 'base64');
-        // console.log('encrypted: ', encrypted);
-        // const decrypted = key.decrypt(encrypted, 'utf8');
-        // console.log('decrypted: ', decrypted);
-
-
-        var RSAKey = require('react-native-rsa');
-        const bits = 2048;
-        const exponent = '10001'; // must be a string
-        var rsa = new RSAKey();
-        var r = rsa.generate(bits, exponent);
-        var publicKey = rsa.getPublicString(); // return json encoded string
-        var privateKey = rsa.getPrivateString(); //
-        console.log(privateKey);
-        
-        rsa.setPublicString(publicKey);
-        // rsa.setPublicString('MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAjkkR4ywcJQAwjQk0Azuc1nfqmJ8R8L8R7Y8zX+YG4/3WBS3/j1j5LnumOKo9YE9BfGvlGKEs18+dPZYgY84bu2JrZCsSdZBu4Ak/cF/75H7OUm/tIQ/AU+dqrlh1yUKyOQa8eP/t8QRdmSnGG9wiBzsvEng63x3YEAnFZu0rmdHAyCT6OI6Kmh6c9GkqoRVLBmCNvGu8JgxY5QooAleR/blD7wLKSJjHJXYgnioX/2nUJOa0/uO47hpARC6vBPpz1csfqIHMaz8FzDbXqBD+aCHy3P1xlqg+xzkKskjU9X1At+AFap7KCgMZPKk3wDPWdn3M9zAuNsyhSlptimPx6MkUtRNvCXMLHTzI1lzGpaDza3Ip02G6nBfkoEPcvTpX3jervKqBERtaxrwd6o9MoFTPHZBleFMgVjQuZH94BrecBLvxDqsn2iREalDuFB5UIhbyH65+enDKvETx15+cDe5eVFTHWLppyyBa5hIsu/NvxrXk3yhW2xse4Wdd+8Kft1swZGBOjKqpqM+2EOSfMhtaps+eTjp5hJLN34n0BvPaz1PWHBVps41P1crZF1i9B7urkiUxtMBUxJq6G0OeBIfdxpPGcUbwwChvD0IZ9RYBeLv8FOAcnwrHtdeg8fkzlxh76BdauReNyOnGLFbn1cZBQ+sfE0bJNIpUVEmQD90CAwEAAQ==');
-        // var originText = 'sample String Value';
-        // var encrypted = rsa.encrypt(originText);
-        // console.log('encrypted:',encrypted);
-        
-        // let rsa = new RSAKey();
-        let originText = {
-            amount: this.state.amount,
-            partnerRefId: '490741545892130',
-            partnerCode:'MOMOZQHX20190923',
-            partnerName:'AppShop',
-            description: this.state.description
-        };
-        let encrypted = rsa.encrypt(JSON.stringify(originText));
-        console.log('encrypted:____',encrypted);
-
-
         // Listen for native events
         let me = this;
         EventEmitter.addListener('RCTMoMoNoficationCenterRequestTokenReceived', (response) => {
@@ -181,13 +144,13 @@ export default class BuyCart extends React.Component {
             let jsonData = {};
             jsonData.action = "gettoken"; // default gettoken
             jsonData.partner = "merchant"; // default merchant
-            jsonData.appScheme = "partnerSchemeId";// partnerSchemeId được cung cấp bởi MoMo ---iOS App Only , get from Info.plist > key URL types > URL Schemes. Check Readme 
+            jsonData.appScheme = "momoiqa420180417";// partnerSchemeId được cung cấp bởi MoMo ---iOS App Only , get from Info.plist > key URL types > URL Schemes. Check Readme 
             jsonData.amount = this.state.amount; // so tien thanh toan
             jsonData.description = this.state.billdescription;// Mo ta Chi tiet
-            jsonData.merchantcode = "MOMOZQHX20190923"; // thong tin partner code tu momo
+            jsonData.merchantcode = "MOMOIQA420180417"; // thong tin partner code tu momo
             jsonData.merchantname = 'APP SHOP'; // ten shop
             jsonData.merchantnamelabel = this.state.mermerchantNameLabel; // Hien Thi ten shop tren momo
-            jsonData.free = 30000; // phi thanh toan.
+            jsonData.fee = 0; // phi thanh toan.
             jsonData.userName = this.state.userName;// dinh danh user email or id
             jsonData.orderLabel = "Ma don hang"; // Label để hiển thị Mã đơn hàng
             jsonData.orderId = "490741545892130"; //Mã đơn hàng đối tác
@@ -212,48 +175,46 @@ export default class BuyCart extends React.Component {
     }
 
     async momoHandleResponse(response) {
-        // let rsa = new RSARSAKey();
-        // rsa.setPublicString('MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAjkkR4ywcJQAwjQk0Azuc1nfqmJ8R8L8R7Y8zX+YG4/3WBS3/j1j5LnumOKo9YE9BfGvlGKEs18+dPZYgY84bu2JrZCsSdZBu4Ak/cF/75H7OUm/tIQ/AU+dqrlh1yUKyOQa8eP/t8QRdmSnGG9wiBzsvEng63x3YEAnFZu0rmdHAyCT6OI6Kmh6c9GkqoRVLBmCNvGu8JgxY5QooAleR/blD7wLKSJjHJXYgnioX/2nUJOa0/uO47hpARC6vBPpz1csfqIHMaz8FzDbXqBD+aCHy3P1xlqg+xzkKskjU9X1At+AFap7KCgMZPKk3wDPWdn3M9zAuNsyhSlptimPx6MkUtRNvCXMLHTzI1lzGpaDza3Ip02G6nBfkoEPcvTpX3jervKqBERtaxrwd6o9MoFTPHZBleFMgVjQuZH94BrecBLvxDqsn2iREalDuFB5UIhbyH65+enDKvETx15+cDe5eVFTHWLppyyBa5hIsu/NvxrXk3yhW2xse4Wdd+8Kft1swZGBOjKqpqM+2EOSfMhtaps+eTjp5hJLN34n0BvPaz1PWHBVps41P1crZF1i9B7urkiUxtMBUxJq6G0OeBIfdxpPGcUbwwChvD0IZ9RYBeLv8FOAcnwrHtdeg8fkzlxh76BdauReNyOnGLFbn1cZBQ+sfE0bJNIpUVEmQD90CAwEAAQ==');
-        // let originText = {
-        //     amount: this.state.amount,
-        //     partnerRefId: '490741545892130',
-        //     partnerCode:'MOMOZQHX20190923',
-        //     partnerName:'AppShop',
-        //     description: this.state.description
-        // };
-        // let encrypted = rsa.encrypt(JSON.stringify(originText));
-        // console.log('encrypted:____',encrypted);
-
         try {
             if (response && response.status == 0) {
+
                 let fromapp = response.fromapp; //ALWAYS:: fromapp==momotransfer
                 this.setState({ description: JSON.stringify(response), processing: false });
                 let momoToken = response.data;
                 let phonenumber = response.phonenumber;
-                let message = response.message;
                 //continue to submit momoToken,phonenumber to server
-                await fetch("https://test-payment.momo.vn/pay/app",
-                    {
-                        method: 'POST',
-                        headers: {
-                            Accept: "application/json",
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({
-                            customerNumber: phonenumber,
-                            partnerCode: "MOMOZQHX20190923",
-                            partnerRefId: "Merchant123556666",
-                            appData: "v2/qTvMqf/tI/l8nJ7Fk/M6lA7IONyPWhlseC3tz5V0oOc3baw6uK5qj0qTz1djyrfPP/ShhP61ccwOXXqmbp7ew+5nRBHsFscoUYTuK7xe3r9OWyLNACZUHUeEsrQmfEl2SQhKWN9yh9WU+7xLuASlLDinNnUXNyUo1HR7L7PlUv4ZbzAoCaahTzAVS7kb8LuiDjUeG3D1Go+xACbnlDRLebLcmF17DjAkQ/nB19u/QwhN3lJhQva21CSuj3dzcJXq9d+qXXrjgxUrB8frdjp8l5GZEoXFa4OWhUeeYlEIHUmNIwAqyf89+of/8MtEi3owevj9DvYcj76e1n05i4HD+LrtKzMhSvU4+NCTMx7yk4N1curATRSgK6HSWn3vXjSZa2PjlmCz+mXCPM1q/HeSypx6T0GKIYj87lO3Sg57mqWcJJWNvlxctRXgr2sq0tgdP4NT6TsCrjFY42YqVXtuqgXmJEfD7JN01r5kcA0HJvNX7v4auMZI0WcDAkW9HAlPlCw2CByM60kk2l8L2O4BTWyUWwKFxLtE/36HifLeV/E5xREsdmA9pOhGp92ZOMFM3mNKxctlUGorXWkQdoKpl9OQRGBWBWi59q0/gHM7AUTHkQqJPMT2R/M8tS+dpc4xXPoG4t+S+FNHt90mtMZUSlX/BSQ6sOlCoSbddMPHFJuR1N1wL7YC1sFmQJITi/4yIT5YYGXCg3KsuASpVVtL3VmdlhD7yRNcWBKKW5hwySrPwhLVbimz5+3qhoeVKozFCO1KfIPyZ2QgiBYyNwWcvvIjAQ8F/uXKIRIIOe7v7tTJQKw2TIwPYqADi3OOdGJX",
-                            hash: encrypted,
-                            description: "Thanh toan cho don hang Merchant123556666 qua MoMo",
-                            version: 2
-                        }),
-                    }
-                ).then(
-                    res => {
-                        console.log('momoHandleResponse', res.json());
-                    }
-                );
+                    console.log("response:_______", response);
+
+                    fetch("http://192.168.0.113:3000/paymentMOMO",
+                        {
+                            method: 'POST',
+                            headers: {
+                                Accept: "application/json",
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify({
+                                customerNumber: phonenumber,
+                                customerName: 'Nguyen Van A',
+                                partnerCode: 'MOMOIQA420180417',
+                                partnerRefId: '490741545892130',
+                                appData: momoToken,
+                                description: "Thanh toan cho don hang Merchant123556666 qua MoMo",
+                                amount: this.state.amount,
+                                partnerTransId: 'Thanh Toan MOMO'
+                            }),
+                        }
+                    ).then(
+                        res => {
+                            return res.json();
+                        }
+                    ).then(
+                        res1 => {
+                            console.log(res1.encrypted);
+
+                        }
+                    )
+
+                
             } else {
                 this.setState({ description: "message: Get token fail", processing: false });
             }
