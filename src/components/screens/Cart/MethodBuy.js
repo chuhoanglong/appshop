@@ -112,7 +112,7 @@ onPressMOMO = async () => {
         jsonData.fee = 0; // phi thanh toan.
         jsonData.userName = this.state.userName;// dinh danh user email or id
         jsonData.orderLabel = "Ma don hang"; // Label để hiển thị Mã đơn hàng
-        jsonData.orderId = JSON.stringify(new Date()); //Mã đơn hàng đối tác
+        jsonData.orderId = `${Math.floor(Math.random() * Math.floor(999999999)) + 11111111111}`; //Mã đơn hàng đối tác
         jsonData.isDev = true; //SANBOX only , remove this key on PRODUCTION 
         jsonData.enviroment = "0"; //"0": SANBOX , "1": PRODUCTION
         jsonData.requestId = "your_requestId";
@@ -144,7 +144,7 @@ async momoHandleResponse(response) {
             //continue to submit momoToken,phonenumber to server
             console.log("response:_______", response);
 
-            fetch("http://192.168.0.113:3000/paymentMOMO",
+            fetch("https://dmkjo.sse.codesandbox.io/paymentMOMO",
                 {
                     method: 'POST',
                     headers: {
@@ -155,7 +155,7 @@ async momoHandleResponse(response) {
                         customerNumber: phonenumber,
                         customerName: this.state.hoten,
                         partnerCode: 'MOMOIQA420180417',
-                        partnerRefId: this.state.orderId,
+                        partnerRefId: response.orderId,
                         appData: momoToken,
                         description: `Thanh toan cho don hang ${this.state.orderId} qua MoMo`,
                         amount: this.state.amount,
@@ -169,7 +169,6 @@ async momoHandleResponse(response) {
             ).then(
                 res1 => {
                     console.log(res1.encrypted);
-
                 }
             )
 
