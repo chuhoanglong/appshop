@@ -23,7 +23,7 @@ export default class Login extends Component {
         super(props);
         this.state = {
             isActivity: false,
-            username: '',
+            email: '',
             password: '',
             isSecureTextEntry: true
         }
@@ -32,8 +32,8 @@ export default class Login extends Component {
     onClickLogin() {
         this.setState({ isActivity: !this.state.isActivity });
         const user = {
-            name: this.state.username,
-            pass: this.state.password
+            email: this.state.email,
+            password: this.state.password
         }
         new Promise((resolve, reject) => {
             user.resolve = resolve;
@@ -125,12 +125,12 @@ export default class Login extends Component {
 
                         <Text style={{ fontSize: 12, fontWeight: 'bold' }}>UserName:</Text>
                         <TextInput
-                            placeholder={'Enter your username !'}
+                            placeholder={'Enter your email !'}
                             keyboardType={'name-phone-pad'}
                             style={styles.containerEnterUser}
                             onChangeText={
-                                (username) => this.setState({
-                                    username
+                                (email) => this.setState({
+                                    email
                                 })
                             }
                         />

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import CartsComponent from '../components/screens/Cart/CartsComponent';
-import { changeSize,deleteProduct } from '../actions/rootAction';
+import { changeSize,deleteProduct,paymentCart } from '../actions/rootAction';
 
 const mapStateToProps = state => {
     return {
@@ -15,6 +15,9 @@ const mapDispatchToProps = dispatch => {
         },
         onDeleteProduct: newCarts =>{
             dispatch(deleteProduct(newCarts));
+        },
+        paymentCart: payload => {
+            dispatch(paymentCart(payload))
         }
     }
 }

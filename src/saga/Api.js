@@ -1,11 +1,11 @@
 import AsyncStorage from '@react-native-community/async-storage';
 // phu trach GET POST PULL DELETE du lieu.
-const URL_PRODUCT_PRODUCT = 'https://068f3.sse.codesandbox.io/products';
+const URL_PRODUCT_PRODUCT = 'https://dmkjo.sse.codesandbox.io/products';
 const URL_PRODUCT = 'http://192.168.0.113:3000/products';
-const URL_USER = 'http://192.168.0.113:3000/users';
+const URL_USER = 'https://dmkjo.sse.codesandbox.io/users';
 
 const getProducts = async (category) => {
-    let URL = URL_PRODUCT;
+    let URL = URL_PRODUCT_PRODUCT;
     if (!!category) {
         URL += '?category=' + category;
     }
@@ -29,7 +29,7 @@ const getCartsFromAsyncStorage = async () => {
     }
 }
 
-const getUserLogin = async (name,pass) => {
+const getUserLogin = async (email,password) => {
     const res = await fetch(URL_USER,
         {
             method: 'POST',
@@ -38,8 +38,8 @@ const getUserLogin = async (name,pass) => {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                name,
-                pass,
+                email,
+                password,
             }),
         }
     );

@@ -7,6 +7,7 @@ import ProductContainer from '../../containers/ProductContainer';
 import CartContainer from '../../containers/CartContainer';
 import BuyCart from '../../components/screens/Cart/buyCart';
 import UserComponent from '../UserManager/UserComponent';
+import MethodBuy from '../screens/Cart/MethodBuy';
 
 const homeStack = createStackNavigator(
     {
@@ -32,6 +33,9 @@ const cartStack = createStackNavigator({
     },
     BuyCart: {
         screen: BuyCart
+    },
+    MethodBuy:{
+        screen: MethodBuy
     }
 });
 cartStack.navigationOptions = {

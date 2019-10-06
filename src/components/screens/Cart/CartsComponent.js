@@ -154,7 +154,7 @@ export default class CartsComponent extends React.Component {
                     <TouchableOpacity
                         onPress={
                             () => {
-                                this.props.navigation.navigate('BuyCart');
+                                this.props.navigation.navigate('BuyCart',{amount: (this.sumPrice()*23000)});
                             }
                         }
                     >

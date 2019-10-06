@@ -6,11 +6,11 @@ function* FetchLoginSaga(action){
     console.log(action);
     
     try {
-        const res = yield Api.getUserLogin(action.name,action.pass);
+        const res = yield Api.getUserLogin(action.email,action.password);
         yield put({type:Types.FEETCH_SUCCESS_LOGIN,status: res.status, message: res.message});
         action.resolve(res);
      } catch (error) {
-        yield put({type:Types.FEETCH_FAILD_LOGIN,status:300, message:'loi roi'});
+        yield put({type:Types.FEETCH_FAILD_LOGIN,status:300, message:'Lỗi Đăng Nhập'});
         action.reject(error);
     }
 }

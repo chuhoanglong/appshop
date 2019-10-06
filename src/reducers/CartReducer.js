@@ -2,7 +2,8 @@ import * as Types from '../actions/actionTypes';
 
 
 const initalState = {
-    carts: []
+    carts: [],
+    payload: null
 }
 
 const CartReducer = (state = initalState, action) => {
@@ -32,6 +33,12 @@ const CartReducer = (state = initalState, action) => {
             return{
                 ...state,
                 carts: action.carts
+            }
+        }
+        case Types.PAYMENT_CART: {
+            return {
+                ...state,
+                payload: action.payload
             }
         }
         default: return state;

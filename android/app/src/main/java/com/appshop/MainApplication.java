@@ -5,7 +5,6 @@ import android.os.Bundle;
 
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
-import com.reactlibrary.RNMomosdkPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;

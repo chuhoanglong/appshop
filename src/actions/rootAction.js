@@ -4,8 +4,8 @@ import * as Types from './actionTypes';
 export const userLogin = (payload) => {
     return {
         type: Types.START_LOGIN,
-        name: payload.name,
-        pass: payload.pass,
+        email: payload.email,
+        password: payload.password,
         resolve: payload.resolve,
         reject: payload.reject
     }
@@ -43,6 +43,13 @@ export const deleteProduct = (newCarts) => {
 export const getCarts = () => {
     return {
         type: Types.START_APP
+    }
+}
+
+export const paymentCart = (payload) => {
+    return {
+        type: Types.PAYMENT_CART,
+        payload
     }
 }
 

@@ -4,6 +4,7 @@ export const CHANGE_SIZE = 'CHANGE_SIZE';
 export const DELETE_PRODUCT = 'DELETE_PRODUCT';
 export const START_APP = 'START_APP';
 export const START_LOGIN = 'START_LOGIN';
+export const PAYMENT_CART = 'PAYMENT_CART';
 
 // type of redux-saga
 export const FETCH_SUCCESS_PRODUCTS = 'FETCH_SUCCESS_PRODUCTS';
