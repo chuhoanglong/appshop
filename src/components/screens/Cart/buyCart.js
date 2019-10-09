@@ -29,6 +29,7 @@ export default class BuyCart extends React.Component {
             processing: false,
             hoten: '',
             dienthoai: '',
+            thanhpho:'',
             quanHuyen: '',
             phuongXa: '',
             diachi: ''
@@ -108,7 +109,7 @@ export default class BuyCart extends React.Component {
                         }
                         onChangeText={
                             txt => {
-                                this.setState({ quanHuyen: txt });
+                                this.setState({ thanhpho: txt });
                             }
                         }
                     />
@@ -225,6 +226,7 @@ export default class BuyCart extends React.Component {
                         this.props.navigation.navigate('MethodBuy',{
                             hoten: this.state.hoten,
                             dienthoai: this.state.dienthoai,
+                            thanhpho:this.state.thanhpho,
                             quanHuyen: this.state.quanHuyen,
                             phuongXa: this.state.phuongXa,
                             diachi: this.state.diachi,

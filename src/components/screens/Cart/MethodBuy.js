@@ -41,6 +41,7 @@ class MethodBuy extends React.Component {
             processing: false,
             hoten: '',
             dienthoai: '',
+            thanhpho:'',
             quanHuyen: '',
             phuongXa: '',
             diachi: '',
@@ -50,15 +51,17 @@ class MethodBuy extends React.Component {
 
     componentWillMount() {
         const { navigation } = this.props;
-        const hoten = JSON.stringify(navigation.getParam('hoten', 'NO-HOTEN'));
-        const dienthoai = JSON.stringify(navigation.getParam('dienthoai', 'NO-DIENTHOAI'));
-        const diachi = JSON.stringify(navigation.getParam('diachi', 'NO-DIACHI'));
-        const quanHuyen = JSON.stringify(navigation.getParam('quanHuyen', 'NO-QUANHUYEN'));
-        const phuongXa = JSON.stringify(navigation.getParam('phuongXa', 'NO-PHUONGXA'));
+        const hoten = navigation.getParam('hoten', 'NO-HOTEN');
+        const dienthoai = navigation.getParam('dienthoai', 'NO-DIENTHOAI');
+        const thanhpho = navigation.getParam('thanhpho', 'NO-THANHPHO');
+        const diachi = navigation.getParam('diachi', 'NO-DIACHI');
+        const quanHuyen = navigation.getParam('quanHuyen', 'NO-QUANHUYEN');
+        const phuongXa = navigation.getParam('phuongXa', 'NO-PHUONGXA');
         const amount = navigation.getParam('amount', 0);
         this.setState({
             hoten,
             dienthoai,
+            thanhpho,
             diachi,
             quanHuyen,
             phuongXa,
@@ -145,12 +148,12 @@ class MethodBuy extends React.Component {
             diachi,
             quanHuyen,
             phuongXa,
+            thanhpho,
             amount,
             createdAt
         } = this.state
         try {
             if (response && response.status == 0) {
-
                 let fromapp = response.fromapp; //ALWAYS:: fromapp==momotransfer
                 this.setState({ description: JSON.stringify(response), processing: false });
                 let momoToken = response.data;
@@ -208,6 +211,7 @@ class MethodBuy extends React.Component {
                                     hoten,
                                     dienthoai,
                                     diachi,
+                                    thanhpho,
                                     quanHuyen,
                                     phuongXa,
                                     createdAt,
