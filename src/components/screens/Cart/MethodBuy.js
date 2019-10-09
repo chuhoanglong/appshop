@@ -10,11 +10,13 @@ import {
     DeviceEventEmitter,
     NativeModules,
     NativeEventEmitter,
+    Alert
 } from 'react-native';
 import { WebView } from 'react-native-webview';
 import axios from "axios";
 import qs from "qs"
 import RNMomosdk from 'react-native-momosdk';
+import { connect } from 'react-redux';
 
 const RNMomosdkModule = NativeModules.RNMomosdk;
 const EventEmitter = new NativeEventEmitter(RNMomosdkModule);
@@ -41,11 +43,12 @@ class MethodBuy extends React.Component {
             dienthoai: '',
             quanHuyen: '',
             phuongXa: '',
-            diachi: ''
+            diachi: '',
+            createdAt: new Date(),
         }
     }
 
-    componentWillMount(){
+    componentWillMount() {
         const { navigation } = this.props;
         const hoten = JSON.stringify(navigation.getParam('hoten', 'NO-HOTEN'));
         const dienthoai = JSON.stringify(navigation.getParam('dienthoai', 'NO-DIENTHOAI'));
@@ -61,7 +64,7 @@ class MethodBuy extends React.Component {
             phuongXa,
             amount
         })
- 
+
     }
 
     componentDidMount() {
@@ -98,86 +101,146 @@ class MethodBuy extends React.Component {
     }
 
     // TODO: Action to Request Payment MoMo App
-onPressMOMO = async () => {
-    if (!this.state.processing) {
-        let jsonData = {};
-        jsonData.action = "gettoken"; // default gettoken
-        jsonData.partner = "merchant"; // default merchant
-        jsonData.appScheme = "momoiqa420180417";// partnerSchemeId được cung cấp bởi MoMo ---iOS App Only , get from Info.plist > key URL types > URL Schemes. Check Readme 
-        jsonData.amount = this.state.amount; // so tien thanh toan
-        jsonData.description = this.state.billdescription;// Mo ta Chi tiet
-        jsonData.merchantcode = "MOMOIQA420180417"; // thong tin partner code tu momo
-        jsonData.merchantname = 'APP SHOP'; // ten shop
-        jsonData.merchantnamelabel = this.state.merchantNameLabel; // Hien Thi ten shop tren momo
-        jsonData.fee = 0; // phi thanh toan.
-        jsonData.userName = this.state.userName;// dinh danh user email or id
-        jsonData.orderLabel = "Ma don hang"; // Label để hiển thị Mã đơn hàng
-        jsonData.orderId = `${Math.floor(Math.random() * Math.floor(999999999)) + 11111111111}`; //Mã đơn hàng đối tác
-        jsonData.isDev = true; //SANBOX only , remove this key on PRODUCTION 
-        jsonData.enviroment = "0"; //"0": SANBOX , "1": PRODUCTION
-        jsonData.requestId = "your_requestId";
+    onPressMOMO = async () => {
+        if (!this.state.processing) {
+            let jsonData = {};
+            jsonData.action = "gettoken"; // default gettoken
+            jsonData.partner = "merchant"; // default merchant
+            jsonData.appScheme = "momoiqa420180417";// partnerSchemeId được cung cấp bởi MoMo ---iOS App Only , get from Info.plist > key URL types > URL Schemes. Check Readme 
+            // jsonData.amount = this.state.amount; // so tien thanh toan
+            jsonData.amount = 1000; // so tien thanh toan
 
-        if (Platform.OS == 'android') {
-            console.log(Platform.OS);
-            // Gui req toi server MOMO.
-            let dataPayment = await RNMomosdk.requestPayment(jsonData);
-            // sau khi MOMO tra ve.
-            this.momoHandleResponse(dataPayment);
-        } else {
-            RNMomosdk.requestPayment(JSON.stringify(jsonData));
+            jsonData.description = this.state.billdescription;// Mo ta Chi tiet
+            jsonData.merchantcode = "MOMOIQA420180417"; // thong tin partner code tu momo
+            jsonData.merchantname = 'APP SHOP'; // ten shop
+            jsonData.merchantnamelabel = this.state.merchantNameLabel; // Hien Thi ten shop tren momo
+            jsonData.fee = 0; // phi thanh toan.
+            jsonData.userName = this.state.userName;// dinh danh user email or id
+            jsonData.orderLabel = "Ma don hang"; // Label để hiển thị Mã đơn hàng
+            jsonData.orderId = `${Math.floor(Math.random() * Math.floor(999999999)) + 11111111111}`; //Mã đơn hàng đối tác
+            jsonData.isDev = true; //SANBOX only , remove this key on PRODUCTION 
+            jsonData.enviroment = "0"; //"0": SANBOX , "1": PRODUCTION
+            jsonData.requestId = "your_requestId";
+
+            if (Platform.OS == 'android') {
+                console.log(Platform.OS);
+                // Gui req toi server MOMO.
+                let dataPayment = await RNMomosdk.requestPayment(jsonData);
+                // sau khi MOMO tra ve.
+                this.momoHandleResponse(dataPayment);
+            } else {
+                RNMomosdk.requestPayment(JSON.stringify(jsonData));
+            }
+            this.setState({ description: "", processing: true });
         }
-        this.setState({ description: "", processing: true });
-    }
-    else {
-        this.setState({ description: ".....", processing: false });
-    }
-}
-
-async momoHandleResponse(response) {
-    try {
-        if (response && response.status == 0) {
-
-            let fromapp = response.fromapp; //ALWAYS:: fromapp==momotransfer
-            this.setState({ description: JSON.stringify(response), processing: false });
-            let momoToken = response.data;
-            let phonenumber = response.phonenumber;
-            //continue to submit momoToken,phonenumber to server
-            console.log("response:_______", response);
-
-            fetch("https://dmkjo.sse.codesandbox.io/paymentMOMO",
-                {
-                    method: 'POST',
-                    headers: {
-                        Accept: "application/json",
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        customerNumber: phonenumber,
-                        customerName: this.state.hoten,
-                        partnerCode: 'MOMOIQA420180417',
-                        partnerRefId: response.orderId,
-                        appData: momoToken,
-                        description: `Thanh toan cho don hang ${this.state.orderId} qua MoMo`,
-                        amount: this.state.amount,
-                        partnerTransId: 'Thanh Toan MOMO'
-                    }),
-                }
-            ).then(
-                res => {
-                    return res.json();
-                }
-            ).then(
-                res1 => {
-                    console.log(res1.encrypted);
-                }
-            )
-
-
-        } else {
-            this.setState({ description: "message: Get token fail", processing: false });
+        else {
+            this.setState({ description: ".....", processing: false });
         }
-    } catch (ex) { }
-}
+    }
+
+    async momoHandleResponse(response) {
+        const {
+            hoten,
+            dienthoai,
+            diachi,
+            quanHuyen,
+            phuongXa,
+            amount,
+            createdAt
+        } = this.state
+        try {
+            if (response && response.status == 0) {
+
+                let fromapp = response.fromapp; //ALWAYS:: fromapp==momotransfer
+                this.setState({ description: JSON.stringify(response), processing: false });
+                let momoToken = response.data;
+                let phonenumber = response.phonenumber;
+                //continue to submit momoToken,phonenumber to server
+                console.log("response:_______", response);
+
+                fetch("https://dmkjo.sse.codesandbox.io/paymentMOMO",
+                    {
+                        method: 'POST',
+                        headers: {
+                            Accept: "application/json",
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            customerNumber: phonenumber,
+                            customerName: this.state.hoten,
+                            partnerCode: 'MOMOIQA420180417',
+                            partnerRefId: response.orderId,
+                            appData: momoToken,
+                            description: `Thanh toan cho don hang ${response.orderId} qua MoMo`,
+                            amount: 1000,
+                            // amount: response.amount,
+                            partnerTransId: 'Thanh Toan MOMO'
+                        }),
+                    }
+                ).then(
+                    res => {
+                        return res.json();
+                    }
+                ).then(
+                    res1 => {
+                        const { response } = res1;
+                        console.log('server appshop response', response);
+                        if (response.status == 0) {
+                            console.log('Thanh Toán Thành Công!');
+                            Alert.alert(
+                                response.message,
+                                `Thanh toán thành công ${response.amount} VND, Mã giao dịch ${response.transid}`,
+                                [
+
+                                    {
+                                        text: 'OK',
+                                    }
+
+                                ]
+                            );
+                            fetch('https://dmkjo.sse.codesandbox.io/users/customers', {
+                                method: 'POST',
+                                headers: {
+                                    Accept: "application/json",
+                                    "Content-Type": "application/json"
+                                },
+                                body: JSON.stringify({
+                                    hoten,
+                                    dienthoai,
+                                    diachi,
+                                    quanHuyen,
+                                    phuongXa,
+                                    createdAt,
+                                    amount,
+                                    carts: this.props.carts,
+                                    avatarUrl: this.props.user.avatar,
+                                    email: this.props.user.email
+                                }),
+                            }).then(res => {
+                                console.log(res);
+                            })
+                        } else {
+                            Alert.alert(response.message);
+                            Alert.alert(
+                                response.message,
+                                `Thanh toán thất bại ${response.amount} VND, Mã giao dịch ${response.transid}`,
+                                [
+
+                                    {
+                                        text: 'OK',
+                                    }
+
+                                ]
+                            );
+                        }
+                    }
+                )
+
+            } else {
+                this.setState({ description: "message: Get token fail", processing: false });
+            }
+        } catch (ex) { }
+    }
 
     //When loading paypal page it refirects lots of times. This prop to control start loading only first time
     SetIsWebViewLoading(is) {
@@ -352,7 +415,7 @@ async momoHandleResponse(response) {
                         activeOpacity={0.5}
                         onPress={this.buyBook}
                         style={
-                            [styles.btn,{marginTop:30}]
+                            [styles.btn, { marginTop: 30 }]
                         }>
                         <Image source={require('../../../assets/logo-paypal.png')} style={{ width: 130, height: 60 }}  ></Image>
                     </TouchableOpacity>
@@ -381,9 +444,18 @@ async momoHandleResponse(response) {
     }
 };
 
+const mapStateToProps = (state) => {
+    return {
+        carts: state.CartReducer.carts,
+        user: state.LoginReducer.user
+    }
+}
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
 
-
-export default MethodBuy;
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(MethodBuy);
 
 const styles = StyleSheet.create({
     container: {
@@ -405,18 +477,18 @@ const styles = StyleSheet.create({
         paddingVertical: 5,
         paddingHorizontal: 15,
         borderRadius: 10,
-        borderColor:'#aaa',
+        borderColor: '#aaa',
         backgroundColor: '#ddd',
         justifyContent: 'center',
         alignItems: 'center',
         alignContent: 'center',
         flexDirection: 'row',
         borderWidth: .5,
-        width:250,
-        height:70,
-        shadowColor:'#aaa',
-        shadowOpacity:.8,
-        shadowOffset:{width:0,height:10},
-        top:20
+        width: 250,
+        height: 70,
+        shadowColor: '#aaa',
+        shadowOpacity: .8,
+        shadowOffset: { width: 0, height: 10 },
+        top: 20
     },
 });

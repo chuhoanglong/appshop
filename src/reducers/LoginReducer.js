@@ -12,7 +12,8 @@ const LoginReducer = (state = initalState, action) =>{
             return{
                 ...state,
                 status: action.status,
-                message: action.message
+                message: action.message,
+                user: action.user
             }
         }
         case Types.FEETCH_FAILD_LOGIN:{

@@ -7,7 +7,7 @@ function* FetchLoginSaga(action){
     
     try {
         const res = yield Api.getUserLogin(action.email,action.password);
-        yield put({type:Types.FEETCH_SUCCESS_LOGIN,status: res.status, message: res.message});
+        yield put({type:Types.FEETCH_SUCCESS_LOGIN,status: res.status, message: res.message, user:res.user});
         action.resolve(res);
      } catch (error) {
         yield put({type:Types.FEETCH_FAILD_LOGIN,status:300, message:'Lỗi Đăng Nhập'});
