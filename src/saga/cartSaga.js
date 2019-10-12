@@ -10,7 +10,14 @@ function* getAsyncCart(){
         yield put({type:Types.GET_FAIL_CARTS_ASYNCSTORAGE,error});
     }
 }
-
+function* removeCarts(){
+    try {
+        const carts = yield Api.removeCartsFromAsyncStorage();
+        yield put({type:Types.REMOVE_SUCCESS_CARTS_ASYNCSTORAGE,carts});
+    } catch (error) {
+    }
+}
 export function* getCartsFromAsyncStorage(){
     yield takeEvery(Types.START_APP,getAsyncCart);
+    yield takeEvery(Types.REMOVE_CARTS, removeCarts);
 }

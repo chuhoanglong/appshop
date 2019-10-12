@@ -18,7 +18,7 @@ const CartReducer = (state = initalState, action) => {
             }
         }
         case Types.CHANGE_SIZE: {
-            return{
+            return {
                 ...state,
                 carts: action.newCarts
             }
@@ -29,8 +29,8 @@ const CartReducer = (state = initalState, action) => {
                 carts: action.newCarts
             }
         }
-        case Types.GET_SUCCESS_CARTS_ASYNCSTORAGE:{
-            return{
+        case Types.GET_SUCCESS_CARTS_ASYNCSTORAGE: {
+            return {
                 ...state,
                 carts: action.carts
             }
@@ -39,6 +39,12 @@ const CartReducer = (state = initalState, action) => {
             return {
                 ...state,
                 payload: action.payload
+            }
+        }
+        case Types.REMOVE_SUCCESS_CARTS_ASYNCSTORAGE: {
+            return{
+                ...state,
+                carts: action.carts
             }
         }
         default: return state;

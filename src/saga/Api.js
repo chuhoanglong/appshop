@@ -29,6 +29,11 @@ const getCartsFromAsyncStorage = async () => {
     }
 }
 
+const removeCartsFromAsyncStorage = async () => {
+    await AsyncStorage.removeItem('carts');
+    return [];
+}
+
 const getUserLogin = async (email,password) => {
     const res = await fetch(URL_USER,
         {
@@ -52,4 +57,5 @@ module.exports = {
     getProducts,
     getCartsFromAsyncStorage,
     getUserLogin,
+    removeCartsFromAsyncStorage
 }

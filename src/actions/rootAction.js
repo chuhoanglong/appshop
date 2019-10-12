@@ -52,6 +52,11 @@ export const paymentCart = (payload) => {
         payload
     }
 }
+export const removeCart = () => {
+    return {
+        type: Types.REMOVE_CARTS,
+    }
+}
 
 // dispatch of redux-saga
 export const fetchSuccessProducts = (products, isLoading) => {
@@ -81,5 +86,12 @@ export const fetchFailLogin = (res) => {
         type: Types.FEETCH_FAILD_LOGIN,
         status: res.status,
         message: res.message
+    }
+}
+
+export const removeCartSuccess = (carts) => {
+    return {
+        type: Types.REMOVE_SUCCESS_CARTS_ASYNCSTORAGE,
+        carts
     }
 }

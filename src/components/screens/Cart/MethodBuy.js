@@ -17,6 +17,8 @@ import axios from "axios";
 import qs from "qs"
 import RNMomosdk from 'react-native-momosdk';
 import { connect } from 'react-redux';
+import Asynstore from '@react-native-community/async-storage'
+import { removeCart } from '../../../actions/rootAction';
 
 const RNMomosdkModule = NativeModules.RNMomosdk;
 const EventEmitter = new NativeEventEmitter(RNMomosdkModule);
@@ -41,7 +43,7 @@ class MethodBuy extends React.Component {
             processing: false,
             hoten: '',
             dienthoai: '',
-            thanhpho:'',
+            thanhpho: '',
             quanHuyen: '',
             phuongXa: '',
             diachi: '',
@@ -222,7 +224,9 @@ class MethodBuy extends React.Component {
                                 }),
                             }).then(res => {
                                 console.log(res);
-                            })
+                            });
+                            this.props.removeCarts();
+                            Asynstore.removeItem('carts');
                         } else {
                             Alert.alert(response.message);
                             Alert.alert(
@@ -454,9 +458,11 @@ const mapStateToProps = (state) => {
         user: state.LoginReducer.user
     }
 }
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = (dispatch) => {
     return {
-
+        removeCarts: () => {
+            dispatch(removeCart())
+        }
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(MethodBuy);
