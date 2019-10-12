@@ -16,7 +16,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Icon1 from 'react-native-vector-icons/Ionicons'
 import AsyncStore from '@react-native-community/async-storage';
 import RNAccountKit from 'react-native-facebook-account-kit';
-
+import firebase from 'react-native-firebase';
 import logo from '../../assets/codersTokyo.png';
 export default class Login extends Component {
     constructor(props) {
@@ -47,9 +47,11 @@ export default class Login extends Component {
                 Alert.alert(this.props.message);
             } else {
                 Alert.alert(this.props.message);
+                this.setState({ isActivity: !this.state.isActivity });
             }
         }).catch(err => {
             Alert.alert(err);
+            this.setState({ isActivity: !this.state.isActivity });
         })
     }
 
@@ -222,7 +224,10 @@ export default class Login extends Component {
                                 <Text style={[styles.containerBtnTxt]}>LOGIN WITH EMAIL</Text>
                             </TouchableOpacity>
                         </LinearGradient>
-                        <Text style={{ textAlign: 'center', fontSize: 12, color: '#BBB', marginTop: 10 }}>Or Sign Up Using</Text>
+                        <Text
+                            style={{ textAlign: 'center', fontSize: 12, color: '#BBB', marginTop: 10 }}
+                            onPress={()=> this.props.navigation.navigate('Sigup')}
+                        >Or Sign Up Using</Text>
                     </View>
                     <View style={[styles.containerIcon]}>
                         <View style={{ marginHorizontal: 10 }}>

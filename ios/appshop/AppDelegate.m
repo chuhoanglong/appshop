@@ -12,7 +12,7 @@
 #import <React/RCTRootView.h>
 #import "RNSplashScreen.h"  // here
 #import "RNMomosdk.h"
-
+#import <Firebase.h>
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -30,7 +30,7 @@
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
   [RNSplashScreen show];  // here
-  
+  [FIRApp configure];
   return YES;
 }
 -(BOOL)application:(UIApplication *)app openURL:(nonnull NSURL *)url options:(nonnull NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options{

@@ -4,7 +4,7 @@ import { createStackNavigator } from 'react-navigation';
 // import Screen
 import Login from '../Login/LoginComponent';
 import LoginComponent from '../../containers/LoginContainer';
-
+import SigupComponent from '../Login/SigupComponent';
 
 // Stack Navigator for login
 const loginStack = createStackNavigator(
@@ -13,6 +13,9 @@ const loginStack = createStackNavigator(
             screen: LoginComponent
 
         },
+        Sigup:{
+            screen: SigupComponent
+        }
     },
     {
         initialRouteName: "Login",
