@@ -198,6 +198,7 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.facebook.react:react-native:+"  // From node_modules
     implementation project(':react-native-vector-icons')
+    implementation "com.google.firebase:firebase-database:17.0.0"
 
 
     if (enableHermes) {

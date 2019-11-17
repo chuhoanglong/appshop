@@ -10,7 +10,6 @@ import {
     ActivityIndicator,
     TouchableOpacity,
 } from 'react-native';
-import { Container, Header, Left, Body, Right, Title, Button, Icon } from 'native-base';
 import AsyncStorage from '@react-native-community/async-storage';
 // import Icons from 'react-native-vector-icons/Ionicons'
 // import Icons1 from 'react-native-vector-icons/FontAwesome'
@@ -72,58 +71,7 @@ export default class Products extends Component {
 
     render() {
         return (
-            <Container>
-                <Header
-                    style={{ backgroundColor: '#FFF' }}
-                >
-                    <Left>
-                        <TouchableOpacity
-                            transparent
-                            onPress={
-                                () => {
-                                    this.props.navigation.navigate('Home');
-                                }
-                            }
-                        >
-                            {/* <Icon name='arrow-back' style={{ color: '#000' }} /> */}
-                        </TouchableOpacity>
-                    </Left>
-                    <Body>
-                        <Title style={{ color: '#000' }}>{this.state.category}</Title>
-                    </Body>
-                    <Right>
-                        <TouchableOpacity
-                            transparent
-                            onPress={
-                                () => {
-                                    this.setState({
-                                        isFilter: !this.state.isFilter,
-                                        isSearch: false
-                                    })
-                                }
-                            }
-                        >
-                            <View style={{ marginHorizontal: 16 }}>
-                                {/* <Icons1 name='filter' size={30} /> */}
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            transparent
-                            onPress={
-                                () => {
-                                    this.setState({
-                                        isSearch: !this.state.isSearch,
-                                        isFilter: false
-                                    });
-                                }
-                            }
-                        >
-                            <View style={{ marginHorizontal: 16 }}>
-                                {/* <Icons name='ios-search' size={30} /> */}
-                            </View>
-                        </TouchableOpacity>
-                    </Right>
-                </Header>
+            <View>
                 {
                     this.state.isSearch && <TextInput
                         style={this.state.isTextFocusSearch ? styles.containerTxtSearchFocus : styles.containerTxtSearch}
@@ -196,11 +144,15 @@ export default class Products extends Component {
                         // render từng item có trong data phía trên.
                         renderItem={({ item }) => (
                             <View style={[styles.container]}>
-                                <Image source={{ uri: item.url }} style={{ width: 150, height: 150 }}></Image>
-                                <View style={[styles.info]}>
-                                    <Text style={{ marginLeft: 4 }}>{item.name}</Text>
-                                    <Text style={{ marginRight: 4 }}>${item.price}</Text>
-                                </View>
+                                <TouchableOpacity
+                                    onPress={() => { this.props.navigation.navigate('DetailProduct', { itemId: item.id, item }) }}
+                                >
+                                    <Image source={{ uri: item.url }} style={{ width: 150, height: 150 }}></Image>
+                                    <View style={[styles.info]}>
+                                        <Text style={{ marginLeft: 4 }}>{item.name}</Text>
+                                        <Text style={{ marginRight: 4 }}>${item.price}</Text>
+                                    </View>
+                                </TouchableOpacity>
                                 <TouchableOpacity
                                     style={styles.containerBtn}
                                     onPress={
@@ -230,10 +182,10 @@ export default class Products extends Component {
                         keyExtractor={(item) => `${item.id}`}
                         // số lượng cột hiển thị
                         numColumns={2}
-                        style={{ paddingHorizontal: 4,width:'100%', marginBottom:60 }}
+                        style={{ paddingHorizontal: 4, width: '100%', marginBottom: 0 }}
                     />
                 </View>
-            </Container>
+            </View>
 
         );
     }
@@ -305,7 +257,7 @@ const styles = StyleSheet.create({
     containerFilter: {
         flexDirection: 'row',
         justifyContent: 'flex-end',
-        marginBottom:7,
+        marginBottom: 7,
     },
     containerFilterTxt: {
         flex: 8,

@@ -8,6 +8,7 @@ import CartContainer from '../../containers/CartContainer';
 import BuyCart from '../../components/screens/Cart/buyCart';
 import UserComponent from '../UserManager/UserComponent';
 import MethodBuy from '../screens/Cart/MethodBuy';
+import DetailProductContainer from '../../containers/DetailProductContainer';
 
 const homeStack = createStackNavigator(
     {
@@ -16,11 +17,13 @@ const homeStack = createStackNavigator(
         },
         Products: {
             screen: ProductContainer
+        },
+        DetailProduct: {
+            screen: DetailProductContainer
         }
     },
     {
         mode: 'modal',
-        headerMode: 'none',
     }
 );
 homeStack.navigationOptions = {
@@ -34,7 +37,7 @@ const cartStack = createStackNavigator({
     BuyCart: {
         screen: BuyCart
     },
-    MethodBuy:{
+    MethodBuy: {
         screen: MethodBuy
     }
 });

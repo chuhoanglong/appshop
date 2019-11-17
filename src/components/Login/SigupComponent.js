@@ -231,7 +231,12 @@ export default class SigupComponent extends Component {
                                 </LinearGradient>
                             </View>
                         }
-
+                        <View style={{ alignSelf: 'center', flexDirection: 'row' }}>
+                            <Text style={{color:'#333'}}>go back to </Text>
+                            <TouchableOpacity onPress={()=>{this.props.navigation.navigate('Login')}}>
+                                <Text>Login</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                     <View style={[styles.containerIcon]}>
                         <View style={{ marginHorizontal: 10 }}>

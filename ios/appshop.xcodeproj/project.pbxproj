@@ -21,7 +21,7 @@
 		87C7EDD195C95CB89067DF11 /* libPods-appshop.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A6DDF22AFC3DDD13976E0A70 /* libPods-appshop.a */; };
 		A402EC6DB59247A4B8203149 /* Roboto_medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 051E70519F8C4B72B690A427 /* Roboto_medium.ttf */; };
 		A58C385A9D4249C4844AD1E4 /* rubicon-icon-font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C3608C9AA7FD4348BEECDE32 /* rubicon-icon-font.ttf */; };
-		DB38BAFF23523D7C003C98EE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DB38BAFE23523D7B003C98EE /* GoogleService-Info.plist */; };
+		DB8ABD5A237FF0030064E356 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DB8ABD59237FF0030064E356 /* GoogleService-Info.plist */; };
 		E3659834DC3394561CD29B94 /* libPods-appshop-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 838CC19EAF692F391AD2D962 /* libPods-appshop-tvOSTests.a */; };
 		F57F245F9364440E8A834AAB /* Roboto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B1FD671034A642B68052F6B4 /* Roboto.ttf */; };
 /* End PBXBuildFile section */
@@ -81,7 +81,7 @@
 		BB438D2B9866D3A781710A3E /* Pods-appshop-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-appshop-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-appshop-tvOSTests/Pods-appshop-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		BD49C443AAA34B36BC9C5F9D /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		C3608C9AA7FD4348BEECDE32 /* rubicon-icon-font.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "rubicon-icon-font.ttf"; path = "../node_modules/native-base/Fonts/rubicon-icon-font.ttf"; sourceTree = "<group>"; };
-		DB38BAFE23523D7B003C98EE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Documents/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		DB8ABD59237FF0030064E356 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DF6030DE23E44CFAAE9DB048 /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
 		E943D7C2B6DB5DCD8F9F59AF /* Pods-appshop.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-appshop.debug.xcconfig"; path = "Target Support Files/Pods-appshop/Pods-appshop.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -148,11 +148,11 @@
 		13B07FAE1A68108700A75B9A /* appshop */ = {
 			isa = PBXGroup;
 			children = (
-				DB38BAFE23523D7B003C98EE /* GoogleService-Info.plist */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
+				DB8ABD59237FF0030064E356 /* GoogleService-Info.plist */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
@@ -392,7 +392,7 @@
 				A402EC6DB59247A4B8203149 /* Roboto_medium.ttf in Resources */,
 				F57F245F9364440E8A834AAB /* Roboto.ttf in Resources */,
 				A58C385A9D4249C4844AD1E4 /* rubicon-icon-font.ttf in Resources */,
-				DB38BAFF23523D7C003C98EE /* GoogleService-Info.plist in Resources */,
+				DB8ABD5A237FF0030064E356 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -998,7 +998,7 @@
 				00E356F71AD99517003FC87E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "appshop" */ = {
 			isa = XCConfigurationList;
@@ -1007,7 +1007,7 @@
 				13B07F951A680F5B00A75B9A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "appshop-tvOS" */ = {
 			isa = XCConfigurationList;
@@ -1016,7 +1016,7 @@
 				2D02E4981E0B4A5E006451C7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "appshop-tvOSTests" */ = {
 			isa = XCConfigurationList;
@@ -1025,7 +1025,7 @@
 				2D02E49A1E0B4A5E006451C7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "appshop" */ = {
 			isa = XCConfigurationList;
@@ -1034,7 +1034,7 @@
 				83CBBA211A601CBA00E9B192 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};

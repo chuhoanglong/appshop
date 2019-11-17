@@ -2,7 +2,6 @@
 import { createStackNavigator } from 'react-navigation';
 
 // import Screen
-import Login from '../Login/LoginComponent';
 import LoginComponent from '../../containers/LoginContainer';
 import SigupComponent from '../Login/SigupComponent';
 

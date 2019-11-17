@@ -13,7 +13,8 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import Icon1 from 'react-native-vector-icons/Ionicons'
+import Icon1 from 'react-native-vector-icons/Ionicons';
+import SplashScreen from 'react-native-splash-screen';
 import AsyncStore from '@react-native-community/async-storage';
 import RNAccountKit from 'react-native-facebook-account-kit';
 import firebase from 'react-native-firebase';
@@ -83,7 +84,8 @@ export default class Login extends Component {
             })
     }
 
-    componentWillMount() {
+    componentDidMount() {
+        SplashScreen.hide();
         RNAccountKit.configure({
             responseType: 'token', // 'token' by default,
             titleType: 'login',
@@ -99,9 +101,6 @@ export default class Login extends Component {
                 // for iOS only, see the Theme section
             }
         })
-    }
-
-    componentDidMount() {
         const { navigate } = this.props.navigation;
         AsyncStore.getItem('token').then((res) => {
             if (res) {
@@ -226,7 +225,7 @@ export default class Login extends Component {
                         </LinearGradient>
                         <Text
                             style={{ textAlign: 'center', fontSize: 12, color: '#BBB', marginTop: 10 }}
-                            onPress={()=> this.props.navigation.navigate('Sigup')}
+                            onPress={() => this.props.navigation.navigate('Sigup')}
                         >Or Sign Up Using</Text>
                     </View>
                     <View style={[styles.containerIcon]}>
