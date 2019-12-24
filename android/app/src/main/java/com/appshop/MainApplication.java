@@ -5,10 +5,12 @@ import android.os.Bundle;
 
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import io.invertase.firebase.RNFirebasePackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.oblador.vectoricons.VectorIconsPackage;
+import io.invertase.firebase.database.RNFirebaseDatabasePackage;
 import java.util.List;
 
 public class MainApplication extends Application implements ReactApplication {
@@ -28,6 +30,7 @@ public class MainApplication extends Application implements ReactApplication {
 //      packages.add(new SplashScreenReactPackage());
       //      packages.add(new VectorIconsPackage());
 //      new RNMomosdkPackage();
+      packages.add(new RNFirebaseDatabasePackage());
       return packages;
     }
 

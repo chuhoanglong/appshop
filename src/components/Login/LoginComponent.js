@@ -17,7 +17,6 @@ import Icon1 from 'react-native-vector-icons/Ionicons';
 import SplashScreen from 'react-native-splash-screen';
 import AsyncStore from '@react-native-community/async-storage';
 import RNAccountKit from 'react-native-facebook-account-kit';
-import firebase from 'react-native-firebase';
 import logo from '../../assets/codersTokyo.png';
 export default class Login extends Component {
     constructor(props) {
