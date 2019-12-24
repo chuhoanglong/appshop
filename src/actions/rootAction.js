@@ -78,7 +78,8 @@ export const fetchSuccessLogin = (res) => {
     return {
         type: Types.FEETCH_SUCCESS_LOGIN,
         status: res.status,
-        message: res.message
+        message: res.message,
+        user: res.user
     }
 }
 export const fetchFailLogin = (res) => {

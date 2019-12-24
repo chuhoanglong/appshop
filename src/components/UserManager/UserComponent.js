@@ -12,9 +12,9 @@ import {
 } from 'react-native';
 import Modal from 'react-native-modal'
 import AsyncStorage from '@react-native-community/async-storage';
+import { connect } from 'react-redux';
 
-
-export default class User extends React.Component {
+class User extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -44,8 +44,12 @@ export default class User extends React.Component {
 
         )
     }
+    componentDidMount() {
+        console.log(this.props.infoUser);
 
+    }
     render() {
+        const { name, email, address, phone, avatar } = this.props.infoUser
         return (
             <View style={{ flex: 1 }}>
                 <View style={[styles.accountUser]} >
@@ -59,10 +63,10 @@ export default class User extends React.Component {
                     ></Image>
                     <View style={[styles.accountInfo]}>
                         <Image
-                            source={{ uri: 'https://kenh14cdn.com/2019/4/10/ban-sao-hoatran-4272-1554901265999753211154.jpg' }}
-                            style={{ width: 128, height: 128, borderRadius: 100 }}
+                            source={{ uri: avatar }}
+                            style={{ width: 128, height: 128, borderRadius: 100, alignSelf: 'center' }}
                         ></Image>
-                        <Text style={[styles.accountUserName]}>Linh Nguyen</Text>
+                        <Text style={[styles.accountUserName]}>{name}</Text>
                     </View>
                 </View>
                 <View style={styles.accountAddress}>
@@ -75,9 +79,9 @@ export default class User extends React.Component {
                                 })
                             }
                         }
-                    >Address: 141 Chiến Thắng, Thanh Trì, Hà Nội</Text>
-                    <Text>Phone Number: 098888888</Text>
-                    <Text>Email: LinhNguyen@yahoo.com</Text>
+                    >Address: {address}</Text>
+                    <Text>Phone Number: {phone}</Text>
+                    <Text>Email: {email}</Text>
                 </View>
                 <View style={styles.wrapBtn}>
                     <TouchableOpacity style={styles.btn}>
@@ -112,6 +116,13 @@ export default class User extends React.Component {
 
 }
 
+const mapStateToProps = (state) => {
+    return {
+        infoUser: state.LoginReducer.user
+    }
+}
+
+export default connect(mapStateToProps, null)(User);
 const ModalView = (props) => {
     const [txt, setTxt] = useState(props.txt || '');
     const [isModal, setIsModal] = useState(props.isModal || false);

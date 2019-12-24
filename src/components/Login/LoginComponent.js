@@ -42,7 +42,7 @@ export default class Login extends Component {
             this.props.loginUser(user);
         }).then(res => {
             if (this.props.status == 200) {
-                AsyncStore.setItem('token', 'thisisthetoken');
+                // AsyncStore.setItem('token', res.uid);
                 this.setState({ isActivity: !this.state.isActivity });
                 this.props.navigation.navigate('Home');
                 Alert.alert(this.props.message);
@@ -185,7 +185,7 @@ export default class Login extends Component {
                                     this.onClickLogin.bind(this)
                                 }
                             >
-                                <Text style={[styles.containerBtnTxt]}>SKIP</Text>
+                                <Text style={[styles.containerBtnTxt]}>LOGIN</Text>
                                 {
                                     this.state.isActivity && <ActivityIndicator
                                         size="small"

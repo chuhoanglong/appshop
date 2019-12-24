@@ -5,6 +5,7 @@ import rootAction from '../actions/rootAction';
 const mapStateToProps = (state, ownProps) => {
     return {
         product: state.ProductReducer.products,
+        user: state.LoginReducer.user
     }
 }
 

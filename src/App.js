@@ -16,10 +16,11 @@ export default class App extends React.Component {
     SplashScreen.hide();
   }
   render() {
+    console.disableYellowBox = true;
     return (
-        <Provider store={store}>
-          <AppNavigator></AppNavigator>
-        </Provider>
+      <Provider store={store}>
+        <AppNavigator></AppNavigator>
+      </Provider>
     );
   }
 };
