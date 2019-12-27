@@ -1,0 +1,9 @@
+rootProject.name = 'appshop'
+include ':react-native-firebase'
+project(':react-native-firebase').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-firebase/android')
+apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
+include ':react-native-vector-icons'
+project(':react-native-vector-icons').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-vector-icons/android')
+include ':react-native-momosdk'
+project(':react-native-momosdk').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-momosdk/android')
+include ':app'
