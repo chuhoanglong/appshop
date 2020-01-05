@@ -171,6 +171,7 @@ export default class CartsComponent extends React.Component {
                             data={orderOfMe.carts}
                             renderItem={({ item }) => (
                                 <TouchableOpacity
+                                    disabled={orderOfMe.isVerifying !== 0}
                                     onPress={() => {
                                         // this.onPress
                                         this.props.navigation.navigate('MethodBuy', {
