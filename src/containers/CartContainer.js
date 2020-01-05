@@ -1,10 +1,11 @@
 import { connect } from 'react-redux';
 import CartsComponent from '../components/screens/Cart/CartsComponent';
-import { changeSize,deleteProduct,paymentCart } from '../actions/rootAction';
+import { changeSize, deleteProduct, paymentCart } from '../actions/rootAction';
 
 const mapStateToProps = state => {
     return {
-        carts: state.CartReducer.carts
+        carts: state.CartReducer.carts,
+        uid: state.LoginReducer.user.uid
     }
 }
 
@@ -13,7 +14,7 @@ const mapDispatchToProps = dispatch => {
         onChangeSize: newCarts => {
             dispatch(changeSize(newCarts));
         },
-        onDeleteProduct: newCarts =>{
+        onDeleteProduct: newCarts => {
             dispatch(deleteProduct(newCarts));
         },
         paymentCart: payload => {

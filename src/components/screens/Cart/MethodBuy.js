@@ -48,10 +48,25 @@ class MethodBuy extends React.Component {
             phuongXa: '',
             diachi: '',
             createdAt: new Date(),
+            filterItemUid: {},
+            isVerifying: 0,
+            id: ''
         }
     }
 
-    componentWillMount() {
+    componentDidMount() {
+        // khi khach hang mua san pham cua nhieu shop và cùng thanh toán 1 lần.
+        // lọc các mã idshop để gửi đơn hàng đến đúng shop bán sản phẩm đó.
+        let filterItemUid = [];
+        filterItemUid = this.props.carts.reduce(function (acc, obj) {
+            let key = obj['uid']
+            if (!acc[key]) {
+                acc[key] = []
+            }
+            acc[key].push(obj)
+            return acc
+        }, {});
+        this.setState({ filterItemUid });
         const { navigation } = this.props;
         const hoten = navigation.getParam('hoten', 'NO-HOTEN');
         const dienthoai = navigation.getParam('dienthoai', 'NO-DIENTHOAI');
@@ -59,7 +74,10 @@ class MethodBuy extends React.Component {
         const diachi = navigation.getParam('diachi', 'NO-DIACHI');
         const quanHuyen = navigation.getParam('quanHuyen', 'NO-QUANHUYEN');
         const phuongXa = navigation.getParam('phuongXa', 'NO-PHUONGXA');
+        const note = navigation.getParam('note', '');
         const amount = navigation.getParam('amount', 0);
+        const isVerifying = navigation.getParam('isVerifying', 0);
+        const id = navigation.getParam('id', 0);
         this.setState({
             hoten,
             dienthoai,
@@ -67,12 +85,11 @@ class MethodBuy extends React.Component {
             diachi,
             quanHuyen,
             phuongXa,
-            amount
+            amount,
+            note,
+            isVerifying,
+            id
         })
-
-    }
-
-    componentDidMount() {
         // Listen for native events
         let me = this;
         EventEmitter.addListener('RCTMoMoNoficationCenterRequestTokenReceived', (response) => {
@@ -203,28 +220,52 @@ class MethodBuy extends React.Component {
 
                                 ]
                             );
-                            fetch('https://dmkjo.sse.codesandbox.io/users/customers', {
-                                method: 'POST',
-                                headers: {
-                                    Accept: "application/json",
-                                    "Content-Type": "application/json"
-                                },
-                                body: JSON.stringify({
-                                    hoten,
-                                    dienthoai,
-                                    diachi,
-                                    thanhpho,
-                                    quanHuyen,
-                                    phuongXa,
-                                    createdAt,
-                                    amount,
-                                    carts: this.props.carts,
-                                    avatarUrl: this.props.user.avatar,
-                                    email: this.props.user.email
-                                }),
-                            }).then(res => {
-                                console.log(res);
-                            });
+                            if (this.state.isVerifying === 2) {
+                                fetch('https://dmkjo.sse.codesandbox.io/users/customers/buySuccess', {
+                                    method: 'POST',
+                                    headers: {
+                                        Accept: "application/json",
+                                        "Content-Type": "application/json"
+                                    },
+                                    body: JSON.stringify({ id: navigation.getParam('id', 0) })
+                                }).then(res => res.json()).then(resJson => {
+                                    console.log(resJson);
+                                })
+                            }
+                            const { filterItemUid } = this.state;
+                            for (let i = 0; i < Object.keys(filterItemUid).length; i++) {
+                                let element = [];
+                                let uid = Object.keys(filterItemUid)[i];
+                                for (let j = 0; j < filterItemUid[uid].length; j++) {
+                                    element.push(filterItemUid[uid][j]);
+                                }
+                                fetch('https://dmkjo.sse.codesandbox.io/users/customers', {
+                                    method: 'POST',
+                                    headers: {
+                                        Accept: "application/json",
+                                        "Content-Type": "application/json"
+                                    },
+                                    body: JSON.stringify({
+                                        hoten,
+                                        dienthoai,
+                                        diachi,
+                                        thanhpho,
+                                        quanHuyen,
+                                        phuongXa,
+                                        createdAt,
+                                        amount,
+                                        idShop: uid,
+                                        carts: element,
+                                        note: this.state.note,
+                                        avatarUrl: this.props.user.avatar,
+                                        email: this.props.user.email,
+                                        isVerifying: 1
+                                    }),
+                                }).then(res => {
+                                    console.log(res);
+                                    element = [];
+                                });
+                            }
                             this.props.removeCarts();
                             Asynstore.removeItem('carts');
                         } else {
@@ -415,7 +456,9 @@ class MethodBuy extends React.Component {
             <React.Fragment>
                 <View style={styles.container}>
                     <Text>Chọn phương thức thanh toán</Text>
-                    <TouchableOpacity style={styles.btn} onPress={this.onPressMOMO}>
+                    <TouchableOpacity style={styles.btn} onPress={
+                        this.onPressMOMO
+                    }>
                         <Text style={{ alignSelf: 'center', fontSize: 20 }}>Thanh toán bằng </Text>
                         <Image source={require('../../../assets/logoMOMO.png')} style={{ width: 50, height: 50 }} ></Image>
                     </TouchableOpacity>

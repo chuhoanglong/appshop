@@ -44,7 +44,6 @@ export default class Login extends Component {
                 // AsyncStore.setItem('token', res.uid);
                 this.setState({ isActivity: !this.state.isActivity });
                 this.props.navigation.navigate('Home');
-                Alert.alert(this.props.message);
             } else {
                 Alert.alert(this.props.message);
                 this.setState({ isActivity: !this.state.isActivity });
