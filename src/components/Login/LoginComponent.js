@@ -41,7 +41,8 @@ export default class Login extends Component {
             this.props.loginUser(user);
         }).then(res => {
             if (this.props.status == 200) {
-                // AsyncStore.setItem('token', res.uid);
+                AsyncStore.setItem('token', JSON.stringify(res.user.uid));
+                AsyncStore.setItem('user', JSON.stringify(res));
                 this.setState({ isActivity: !this.state.isActivity });
                 this.props.navigation.navigate('Home');
             } else {

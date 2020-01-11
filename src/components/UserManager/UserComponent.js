@@ -19,7 +19,8 @@ class User extends React.Component {
         super(props);
         this.state = {
             isModal: false,
-            txt: ''
+            txt: '',
+            user: {}
         }
     }
     static navigationOptions = ({ navigation }) => ({ title: 'USER' })
@@ -45,11 +46,15 @@ class User extends React.Component {
         )
     }
     componentDidMount() {
-        console.log(this.props.infoUser);
-
+        AsyncStorage.getItem('user').then(res => {
+            console.log('sadad');
+            const { user } = JSON.parse(res);
+            console.log(user);
+            this.setState({ user });
+        })
     }
     render() {
-        const { name, email, address, phone, avatar } = this.props.infoUser
+        const { name, email, address, phone, avatar } = this.props.infoUser.length > 0 ? this.props.infoUser : this.state.user;
         return (
             <View style={{ flex: 1 }}>
                 <View style={[styles.accountUser]} >

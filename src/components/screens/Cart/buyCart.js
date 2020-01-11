@@ -8,11 +8,12 @@ import {
     ScrollView,
     Platform,
     Switch,
-    KeyboardAvoidingView
+    KeyboardAvoidingView,
+    CheckBox
 } from 'react-native';
-import CheckBox from '@react-native-community/checkbox';
 import { connect } from 'react-redux';
 import { KeyboardAvoidingScrollView } from 'react-native-keyboard-avoiding-scroll-view';
+import AsyncStorage from '@react-native-community/async-storage';
 
 class BuyCart extends React.Component {
     constructor(props) {
@@ -34,10 +35,43 @@ class BuyCart extends React.Component {
             diachi: '',
             txtNote: '',
             isVerifying: false,
+            txtPrice: '',
+            filterItemUid: {},
+            disabled: false,
+            uid: '',
+            user: {}
         }
     }
 
+    componentDidMount() {
+        AsyncStorage.getItem('user').then(res => {
+            const { user } = JSON.parse(res);
+            console.log(user);
+            this.setState({ user: user })
+        })
+        AsyncStorage.getItem('token').then((res) => {
+            if (res) {
+                this.setState({ uid: JSON.parse(res) }, () => { console.log(this.state.uid) });
+            } else {
+
+            }
+        })
+
+        // this.setState({ uid }, () => { });
+        let filterItemUid = [];
+        filterItemUid = this.props.carts.reduce(function (acc, obj) {
+            let key = obj['uid']
+            if (!acc[key]) {
+                acc[key] = []
+            }
+            acc[key].push(obj)
+            return acc
+        }, {});
+        this.setState({ filterItemUid });
+
+    }
     render() {
+
         return (
             <KeyboardAvoidingScrollView>
                 <ScrollView>
@@ -186,8 +220,6 @@ class BuyCart extends React.Component {
                                 }
                             }
                         />
-                        <Text style={{ fontStyle: 'italic', color: '#AAA' }}>Để nhận hàng thuận tiện hơn, bạn vui lòng cho Tiki biết loại địa chỉ.</Text>
-                        <Text style={styles.containerText}>Loai Dia Chi:</Text>
                         {Platform.OS === 'android' ?
                             <React.Fragment>
 
@@ -231,30 +263,17 @@ class BuyCart extends React.Component {
                                     multiline={true}
                                     onChangeText={(txtNote) => { this.setState({ txtNote }) }}
                                 ></TextInput>
+                                <TextInput
+                                    placeholder={'Giá Tiền'}
+                                    style={{ height: 50, borderRadius: 10, borderColor: '#828282', borderWidth: 1, marginVertical: 5, paddingHorizontal: 10 }}
+                                    onChangeText={(txtPrice) => { this.setState({ txtPrice }) }}
+                                ></TextInput>
                             </View>
                         }
                     </View>
 
-                    {!this.state.isCheckbox ? < TouchableOpacity onPress={
-                        () => {
-                            // this.onPress
-                            this.props.navigation.navigate('MethodBuy', {
-                                hoten: this.state.hoten,
-                                dienthoai: this.state.dienthoai,
-                                thanhpho: this.state.thanhpho,
-                                quanHuyen: this.state.quanHuyen,
-                                phuongXa: this.state.phuongXa,
-                                diachi: this.state.diachi,
-                                amount: this.props.navigation.getParam('amount', 0)
-                            })
-                        }
-                    }>
-                        <View style={styles.btnBuy}>
-                            <Text style={{ color: '#FFF' }}>BUY</Text>
-                        </View>
-                    </TouchableOpacity>
-                        :
-                        <TouchableOpacity onPress={
+                    {!this.state.isCheckbox ? < TouchableOpacity
+                        onPress={
                             () => {
                                 // this.onPress
                                 this.props.navigation.navigate('MethodBuy', {
@@ -265,45 +284,63 @@ class BuyCart extends React.Component {
                                     phuongXa: this.state.phuongXa,
                                     diachi: this.state.diachi,
                                     amount: this.props.navigation.getParam('amount', 0)
-                                });
-                                const { filterItemUid } = this.state;
-                                for (let i = 0; i < Object.keys(filterItemUid).length; i++) {
-                                    let element = [];
-                                    let uid = Object.keys(filterItemUid)[i];
-                                    for (let j = 0; j < filterItemUid[uid].length; j++) {
-                                        element.push(filterItemUid[uid][j]);
-                                    }
-
-                                    fetch('https://dmkjo.sse.codesandbox.io/users/customers', {
-                                        method: 'POST',
-                                        headers: {
-                                            Accept: "application/json",
-                                            "Content-Type": "application/json"
-                                        },
-                                        body: JSON.stringify({
-                                            hoten: this.state.hoten,
-                                            dienthoai: this.state.dienthoai,
-                                            diachi: this.state.diachi,
-                                            thanhpho: this.state.thanhpho,
-                                            quanHuyen: this.state.quanHuyen,
-                                            phuongXa: this.state.phuongXa,
-                                            createdAt: new Date(),
-                                            amount: this.props.navigation.getParam('amount', 0),
-                                            idShop: uid,
-                                            carts: element,
-                                            avatarUrl: this.props.user.avatar,
-                                            email: this.props.user.email,
-                                            note: this.state.txtNote,
-                                            isVerifying: false,
-                                        }),
-                                    }).then(res => {
-                                        console.log(res);
-                                        element = [];
-                                    });
-                                }
-                                alert('Xin Vui Lòng Chờ Xác Nhận Từ Đơn Vị Bán!');
+                                })
                             }
-                        }>
+                        }
+                    >
+                        <View style={styles.btnBuy}>
+                            <Text style={{ color: '#FFF' }}>BUY</Text>
+                        </View>
+                    </TouchableOpacity>
+                        :
+                        <TouchableOpacity
+                            disabled={this.state.disabled}
+                            onPress={
+                                () => {
+                                    const { filterItemUid } = this.state;
+                                    for (let i = 0; i < Object.keys(filterItemUid).length; i++) {
+                                        let element = [];
+                                        let uid = Object.keys(filterItemUid)[i];
+                                        for (let j = 0; j < filterItemUid[uid].length; j++) {
+                                            element.push(filterItemUid[uid][j]);
+                                        }
+
+                                        fetch('https://dmkjo.sse.codesandbox.io/users/customers', {
+                                            method: 'POST',
+                                            headers: {
+                                                Accept: "application/json",
+                                                "Content-Type": "application/json"
+                                            },
+                                            body: JSON.stringify({
+                                                uid: this.state.uid.toString(),
+                                                hoten: this.state.hoten,
+                                                dienthoai: this.state.dienthoai,
+                                                diachi: this.state.diachi,
+                                                thanhpho: this.state.thanhpho,
+                                                quanHuyen: this.state.quanHuyen,
+                                                phuongXa: this.state.phuongXa,
+                                                createdAt: new Date(),
+                                                amount: this.state.txtPrice,
+                                                idShop: uid,
+                                                isVerifying: 0,
+                                                carts: element,
+                                                avatarUrl: this.props.user.avatar || this.state.user.avatar,
+                                                email: this.props.user.email || this.state.user.email,
+                                                note: this.state.txtNote,
+                                            }),
+                                        }).then(res => {
+                                            console.log(res);
+                                            if (res.status === 200) {
+                                                AsyncStorage.setItem('carts', JSON.stringify([]))
+                                                this.setState({ disabled: true });
+                                                this.props.navigation.goBack();
+                                            }
+                                            element = [];
+                                        });
+                                    }
+                                    alert('Xin Vui Lòng Chờ Xác Nhận Từ Đơn Vị Bán!');
+                                }
+                            }>
                             <View style={styles.btnBuy}>
                                 <Text style={{ color: '#FFF' }}>Verify</Text>
                             </View>

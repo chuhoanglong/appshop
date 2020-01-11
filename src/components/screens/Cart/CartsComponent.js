@@ -11,6 +11,8 @@ import {
     TouchableOpacity,
     ActivityIndicator,
     Platform,
+    ScrollView,
+    RefreshControl
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import Swipeout from 'react-native-swipeout';
@@ -22,6 +24,7 @@ export default class CartsComponent extends React.Component {
             buy: 0,
             orderOfMe: [],
             isActivity: true,
+            refreshing: false
         }
     }
 
@@ -29,20 +32,47 @@ export default class CartsComponent extends React.Component {
 
     componentDidMount() {
         const uid = this.props.uid;
-        fetch(`https://dmkjo.sse.codesandbox.io/customers/orderOfMe/${uid}`, {
-            method: 'GET',
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json"
-            }
-        }).then(res => {
-            return res.json();
-        }).then(resJson => {
-            if (resJson.status == 200) {
-                this.setState({ orderOfMe: resJson.item, isActivity: false }, () => {
-                    console.log(this.state.orderOfMe);
-                });
-            }
+        AsyncStorage.getItem('token').then(res => {
+
+            const uid = JSON.parse(res);
+            fetch(`https://dmkjo.sse.codesandbox.io/customers/orderOfMe/${uid}`, {
+                method: 'GET',
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json"
+                }
+            }).then(res => {
+                return res.json();
+            }).then(resJson => {
+                if (resJson.status == 200) {
+                    this.setState({ orderOfMe: resJson.item, isActivity: false, refreshing: false }, () => {
+                        console.log(this.state.orderOfMe);
+                    });
+                }
+            })
+        })
+    }
+
+    onRefresh = () => {
+        this.setState({ refreshing: true });
+        AsyncStorage.getItem('token').then(res => {
+
+            const uid = JSON.parse(res);
+            fetch(`https://dmkjo.sse.codesandbox.io/customers/orderOfMe/${uid}`, {
+                method: 'GET',
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json"
+                }
+            }).then(res => {
+                return res.json();
+            }).then(resJson => {
+                if (resJson.status == 200) {
+                    this.setState({ orderOfMe: resJson.item, isActivity: false, refreshing: false }, () => {
+                        console.log(this.state.orderOfMe);
+                    });
+                }
+            })
         })
     }
 
@@ -75,175 +105,186 @@ export default class CartsComponent extends React.Component {
     }
 
     render() {
-        const { orderOfMe } = this.state;
+        const { orderOfMe, refreshing } = this.state;
         console.log(orderOfMe);
 
         return (
-            <View style={{ flex: 1 }}>
-                {this.props.carts.length > 0 &&
-                    <View>
-                        <Text style={{ fontSize: 18, fontWeight: '600', color: '#828282', alignSelf: 'center', marginTop: 10 }}>Sản Phẩm Vừa Chọn</Text>
-                        <FlatList
-                            data={this.props.carts}
-                            renderItem={({ item }) => (
-                                <Swipeout
-                                    right={[
-                                        {
-                                            text: <Icons name='trash-o' size={25} color={'#FFF'}></Icons>,
-                                            onPress: () => {
-                                                Alert.alert(
-                                                    'Xóa Sản Phẩm',
-                                                    `Bạn Có Muốn xóa sản phẩm ${item.name} này ?`,
-                                                    [
-                                                        {
-                                                            text: 'Cancel',
-                                                            onPress: () => console.log('Ask me later pressed'),
-                                                            style: 'cancel',
-                                                        },
-                                                        {
-                                                            text: 'OK',
-                                                            onPress: () => {
-                                                                let newCarts = this.props.carts.filter(
-                                                                    (product) => {
-                                                                        return product.key != item.key
-                                                                    }
-                                                                )
-                                                                this.props.onDeleteProduct(newCarts);
-                                                                try {
-                                                                    AsyncStorage.setItem('carts', JSON.stringify(newCarts))
-                                                                } catch (error) {
-                                                                    console.log(error);
+            <ScrollView
+                refreshControl={
+                    <RefreshControl refreshing={refreshing} onRefresh={() => this.onRefresh()} />
+                }
+            >
 
+                <View style={{ flex: 1 }}>
+                    {this.props.carts.length > 0 &&
+                        <View>
+                            <Text style={{ fontSize: 18, fontWeight: '600', color: '#828282', alignSelf: 'center', marginTop: 10 }}>Sản Phẩm Vừa Chọn</Text>
+                            <FlatList
+                                data={this.props.carts}
+                                renderItem={({ item }) => (
+                                    <Swipeout
+                                        right={[
+                                            {
+                                                text: <Icons name='trash-o' size={25} color={'#FFF'}></Icons>,
+                                                onPress: () => {
+                                                    Alert.alert(
+                                                        'Xóa Sản Phẩm',
+                                                        `Bạn Có Muốn xóa sản phẩm ${item.name} này ?`,
+                                                        [
+                                                            {
+                                                                text: 'Cancel',
+                                                                onPress: () => console.log('Ask me later pressed'),
+                                                                style: 'cancel',
+                                                            },
+                                                            {
+                                                                text: 'OK',
+                                                                onPress: () => {
+                                                                    let newCarts = this.props.carts.filter(
+                                                                        (product) => {
+                                                                            return product.key != item.key
+                                                                        }
+                                                                    )
+                                                                    this.props.onDeleteProduct(newCarts);
+                                                                    try {
+                                                                        AsyncStorage.setItem('carts', JSON.stringify(newCarts))
+                                                                    } catch (error) {
+                                                                        console.log(error);
+
+                                                                    }
                                                                 }
                                                             }
-                                                        }
 
 
-                                                    ]
-                                                );
+                                                        ]
+                                                    );
 
-                                            },
-                                            type: 'delete',
-                                        }
-                                    ]}
-                                    backgroundColor={'transparent'}
-                                    buttonWidth={60}
+                                                },
+                                                type: 'delete',
+                                            }
+                                        ]}
+                                        backgroundColor={'transparent'}
+                                        buttonWidth={60}
 
-                                >
-                                    <View style={[styles.container]}>
-                                        <Image source={{ uri: item.url }} style={{ width: 170, height: 120, flex: 1 }}></Image>
-                                        <View style={[styles.info]}>
-                                            <Text style={{ fontSize: 20, marginVertical: 5 }}>{item.name}</Text>
-                                            <Text style={{ fontSize: 15 }}>Color: {item.color}</Text>
-                                            <Text style={{ fontSize: 15 }}>Price: ${item.price}</Text>
-                                            <View style={{ flex: 1, flexDirection: 'row' }}>
-                                                <Text style={{ flex: 1 }}>Size: </Text>
-                                                <Picker
-                                                    selectedValue={item.size}
-                                                    style={{ height: 20, flex: 1, width: 50 }}
-                                                    itemStyle={{ width: 30, height: 42, marginTop: -14, marginHorizontal: -50 }}
-                                                    onValueChange={(itemValue) => {
-                                                        const newCarts = this.handleChangeSize(item.id, itemValue);
-                                                        this.props.onChangeSize(newCarts);
-                                                    }}
-                                                >
-                                                    <Picker.Item label="36" value="36" />
-                                                    <Picker.Item label="37" value="37" />
-                                                    <Picker.Item label="38" value="38" />
-                                                    <Picker.Item label="39" value="39" />
-                                                    <Picker.Item label="40" value="40" />
-                                                </Picker>
+                                    >
+                                        <View style={[styles.container]}>
+                                            <Image source={{ uri: item.url }} style={{ width: 170, height: 120, flex: 1 }}></Image>
+                                            <View style={[styles.info]}>
+                                                <Text style={{ fontSize: 20, marginVertical: 5 }}>{item.name}</Text>
+                                                <Text style={{ fontSize: 15 }}>Color: {item.color}</Text>
+                                                <Text style={{ fontSize: 15 }}>Price: ${item.price}</Text>
+                                                <View style={{ flex: 1, flexDirection: 'row' }}>
+                                                    <Text style={{ flex: 1 }}>Size: </Text>
+                                                    <Picker
+                                                        selectedValue={item.size}
+                                                        style={{ height: 20, flex: 1, width: 50 }}
+                                                        itemStyle={{ width: 30, height: 42, marginTop: -14, marginHorizontal: -50 }}
+                                                        onValueChange={(itemValue) => {
+                                                            const newCarts = this.handleChangeSize(item.id, itemValue);
+                                                            this.props.onChangeSize(newCarts);
+                                                        }}
+                                                    >
+                                                        <Picker.Item label="36" value="36" />
+                                                        <Picker.Item label="37" value="37" />
+                                                        <Picker.Item label="38" value="38" />
+                                                        <Picker.Item label="39" value="39" />
+                                                        <Picker.Item label="40" value="40" />
+                                                    </Picker>
+                                                </View>
                                             </View>
                                         </View>
-                                    </View>
-                                </Swipeout>
-                            )}
-                            keyExtractor={(item) => `${item.key}`}
-                            style={{ paddingVertical: 8 }}
-                        ></FlatList>
-                    </View>
-                }
-                {
-                    orderOfMe &&
-                    <View style={{ flex: 1 }}>
-                        <Text style={{ fontSize: 18, fontWeight: '600', color: '#828282', alignSelf: 'center', marginTop: 10 }}>Đơn Đã Mua</Text>
-                        <FlatList
-                            data={orderOfMe.carts}
-                            renderItem={({ item }) => (
-                                <TouchableOpacity
-                                    disabled={orderOfMe.isVerifying !== 0}
-                                    onPress={() => {
-                                        // this.onPress
-                                        this.props.navigation.navigate('MethodBuy', {
-                                            hoten: orderOfMe.name,
-                                            dienthoai: orderOfMe.phone,
-                                            thanhpho: orderOfMe.address.city,
-                                            quanHuyen: orderOfMe.address.state,
-                                            phuongXa: orderOfMe.address.state,
-                                            diachi: orderOfMe.address.street,
-                                            note: orderOfMe.txtNote || '',
-                                            amount: orderOfMe.price || 1000,
-                                            isVerifying: 2,
-                                            id: orderOfMe.id
-                                        })
-                                    }}
-                                >
-                                    <View style={[styles.container]}>
-                                        <Image source={{ uri: item.url }} style={{ width: 170, height: 120, flex: 1 }}></Image>
-                                        <View style={[styles.info]}>
-                                            <Text style={{ fontSize: 20, marginVertical: 5 }}>{item.name}</Text>
-                                            <Text style={{ fontSize: 15 }}>Color: {item.color}</Text>
-                                            <Text style={{ fontSize: 15 }}>Price: ${item.price}</Text>
-                                            <Text style={{ flex: 1 }}>Size: {item.size}</Text>
-                                        </View>
-                                        <View style={{ backgroundColor: orderOfMe.isVerifying === 0 ? "#f57d7d" : "#7df59d", height: 95, width: 95, justifyContent: 'flex-end', transform: [{ rotate: '45deg' }], position: 'absolute', top: -47, right: -47 }}>
-                                            <Text style={{ fontSize: 11.5, fontWeight: '600', alignSelf: 'center', color: '#fff' }}>{orderOfMe.isVerifying === 0 ? 'Chờ Xác Nhận' : orderOfMe.isVerifying === 2 ? 'Đã Xác Nhận' : ''}</Text>
-                                        </View>
-                                    </View>
-                                </TouchableOpacity>
-                            )}
-                            keyExtractor={(item) => `${item.key}`}
-                            style={{ paddingVertical: 8 }}
-                        ></FlatList>
-                    </View>
-                }
-                {
-                    !this.props.carts.length && !orderOfMe &&
-                    <View style={[styles.CartsEmpty]}>
-                        <Text style={{ fontSize: 18, color: 'gray' }}>Empty basket !</Text>
+                                    </Swipeout>
+                                )}
+                                keyExtractor={(item) => `${item.key}`}
+                                style={{ paddingVertical: 8 }}
+                            ></FlatList>
+                        </View>
+                    }
+                    {
+                        orderOfMe &&
+                        <View style={{ flex: 1 }}>
+                            <Text style={{ fontSize: 18, fontWeight: '600', color: '#828282', alignSelf: 'center', marginTop: 10 }}>Đơn Đã Mua</Text>
+                            <FlatList
+                                data={orderOfMe}
+                                renderItem={({ item }) => {
+                                    const { carts } = item;
+                                    let cart = carts[0];
+                                    return (
+                                        <TouchableOpacity
+                                            disabled={!(item.isVerifying === 2)}
+                                            onPress={() => {
+                                                // this.onPress
+                                                this.props.navigation.navigate('MethodBuy', {
+                                                    hoten: item.name,
+                                                    dienthoai: item.phone,
+                                                    thanhpho: item.address.city,
+                                                    quanHuyen: item.address.state,
+                                                    phuongXa: item.address.state,
+                                                    diachi: item.address.street,
+                                                    note: item.txtNote || '',
+                                                    amount: item.price || 1000,
+                                                    isVerifying: 2,
+                                                    id: item.id
+                                                })
+                                            }}
+                                        >
+                                            <View style={[styles.container]}>
+                                                <Image source={{ uri: cart.url }} style={{ width: 170, height: 120, flex: 1 }}></Image>
+                                                <View style={[styles.info]}>
+                                                    <Text style={{ fontSize: 20, marginVertical: 5 }}>{cart.name}</Text>
+                                                    <Text style={{ fontSize: 15 }}>Color: {cart.color}</Text>
+                                                    <Text style={{ fontSize: 15 }}>Price: ${cart.price}</Text>
+                                                    <Text style={{ flex: 1 }}>Size: {cart.size}</Text>
+                                                </View>
+                                                <View style={{ backgroundColor: item.isVerifying === 0 ? "#f57d7d" : "#7df59d", height: 95, width: 95, justifyContent: 'flex-end', transform: [{ rotate: '45deg' }], position: 'absolute', top: -47, right: -47 }}>
+                                                    <Text style={{ fontSize: 11.5, fontWeight: '600', alignSelf: 'center', color: '#fff' }}>{item.isVerifying == 0 ? 'Chờ Xác Nhận' : item.isVerifying == 2 ? 'Đã Xác Nhận' : 'Đã thanh toán'}</Text>
+                                                </View>
+                                            </View>
+                                        </TouchableOpacity>
+                                    )
+                                }}
+                                keyExtractor={(item) => `${item.id}`}
+                                style={{ paddingVertical: 8 }}
+                            ></FlatList>
+                        </View>
+                    }
+                    {
+                        !this.props.carts.length && !orderOfMe &&
+                        <View style={[styles.CartsEmpty]}>
+                            <Text style={{ fontSize: 18, color: 'gray' }}>Empty basket !</Text>
+                            <TouchableOpacity
+                                onPress={
+                                    () => {
+                                        this.props.navigation.navigate('Home')
+                                    }
+                                }
+                            >
+                                <Text style={styles.GoToBuyShop}>Go To Buy Shop</Text>
+                            </TouchableOpacity>
+                        </View>
+                    }
+                    {
+                        !!this.props.carts.length &&
                         <TouchableOpacity
                             onPress={
                                 () => {
-                                    this.props.navigation.navigate('Home')
+                                    this.props.navigation.navigate('BuyCart', { amount: (this.sumPrice() * 23000), uid: this.props.uid });
                                 }
                             }
                         >
-                            <Text style={styles.GoToBuyShop}>Go To Buy Shop</Text>
+                            <View style={styles.btnBuy}>
+                                <Text style={{ color: '#FFF' }}>BUY<Text style={{ fontSize: 18 }}>  ${this.sumPrice()}</Text></Text>
+                            </View>
                         </TouchableOpacity>
-                    </View>
-                }
-                {
-                    !!this.props.carts.length &&
-                    <TouchableOpacity
-                        onPress={
-                            () => {
-                                this.props.navigation.navigate('BuyCart', { amount: (this.sumPrice() * 23000) });
-                            }
-                        }
-                    >
-                        <View style={styles.btnBuy}>
-                            <Text style={{ color: '#FFF' }}>BUY<Text style={{ fontSize: 18 }}>  ${this.sumPrice()}</Text></Text>
-                        </View>
-                    </TouchableOpacity>
-                }
-                {
-                    this.state.isActivity && <ActivityIndicator
-                        size="small"
-                        color="#000"
-                        style={{ zIndex: 9, alignSelf: 'center', position: 'absolute', top: '50%' }}
-                    ></ActivityIndicator>
-                }
-            </View>
+                    }
+                    {
+                        this.state.isActivity && <ActivityIndicator
+                            size="small"
+                            color="#000"
+                            style={{ zIndex: 9, alignSelf: 'center', position: 'absolute', top: '50%' }}
+                        ></ActivityIndicator>
+                    }
+                </View>
+            </ScrollView>
         )
     }
 

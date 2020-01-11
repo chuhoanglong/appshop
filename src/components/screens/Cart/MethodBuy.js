@@ -132,7 +132,7 @@ class MethodBuy extends React.Component {
             // jsonData.amount = this.state.amount; // so tien thanh toan
             jsonData.amount = 1000; // so tien thanh toan
 
-            jsonData.description = this.state.billdescription;// Mo ta Chi tiet
+            jsonData.description = this.props.navigation.getParam('note') || this.state.billdescription;// Mo ta Chi tiet
             jsonData.merchantcode = "MOMOIQA420180417"; // thong tin partner code tu momo
             jsonData.merchantname = 'APP SHOP'; // ten shop
             jsonData.merchantnamelabel = this.state.merchantNameLabel; // Hien Thi ten shop tren momo
@@ -174,7 +174,7 @@ class MethodBuy extends React.Component {
         try {
             if (response && response.status == 0) {
                 let fromapp = response.fromapp; //ALWAYS:: fromapp==momotransfer
-                this.setState({ description: JSON.stringify(response), processing: false });
+                this.setState({ description: JSON.stringify(response), processing: false, isWebViewLoading: true });
                 let momoToken = response.data;
                 let phonenumber = response.phonenumber;
                 //continue to submit momoToken,phonenumber to server
@@ -206,6 +206,7 @@ class MethodBuy extends React.Component {
                 ).then(
                     res1 => {
                         const { response } = res1;
+                        this.setState({ isWebViewLoading: false });
                         console.log('server appshop response', response);
                         if (response.status == 0) {
                             console.log('Thanh Toán Thành Công!');
@@ -220,18 +221,16 @@ class MethodBuy extends React.Component {
 
                                 ]
                             );
-                            if (this.state.isVerifying === 2) {
-                                fetch('https://dmkjo.sse.codesandbox.io/users/customers/buySuccess', {
-                                    method: 'POST',
-                                    headers: {
-                                        Accept: "application/json",
-                                        "Content-Type": "application/json"
-                                    },
-                                    body: JSON.stringify({ id: navigation.getParam('id', 0) })
-                                }).then(res => res.json()).then(resJson => {
-                                    console.log(resJson);
-                                })
-                            }
+                            fetch('https://dmkjo.sse.codesandbox.io/users/customers/buySuccess', {
+                                method: 'POST',
+                                headers: {
+                                    Accept: "application/json",
+                                    "Content-Type": "application/json"
+                                },
+                                body: JSON.stringify({ id: navigation.getParam('id', 0) })
+                            }).then(res => res.json()).then(resJson => {
+                                console.log(resJson);
+                            })
                             const { filterItemUid } = this.state;
                             for (let i = 0; i < Object.keys(filterItemUid).length; i++) {
                                 let element = [];
